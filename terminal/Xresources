@@ -1,0 +1,44 @@
+XTerm*utf8: 1
+XTerm*faceName:         Monospace
+XTerm*faceSize:         8
+XTerm*allowBoldFonts:   false
+XTerm*termName:         xterm-256color
+Xterm*local:            true
+XTerm*saveLines:        65535
+XTerm*scrollstyle:      plain
+XTerm*scrollBar:        false
+XTerm*cursorBlink:      false
+XTerm*cursorUnderline:  false
+
+xterm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
+
+!urxvt color scheme:
+XTerm*background:       #080808
+XTerm*foreground:       #F0F0F0
+
+XTerm*colorUL:          #86a2b0
+
+! black
+XTerm*color0:           #1F1F1F
+XTerm*color8:           #454545
+! red
+XTerm*color1:           #CC0000
+XTerm*color9:           #EF2929
+! green
+XTerm*color2:           #4E9A06
+XTerm*color10:          #8AE234
+! yellow
+XTerm*color3:           #C4A000
+XTerm*color11:          #FCE94F
+! blue
+XTerm*color4:           #3465A4
+XTerm*color12:          #729FCF
+! magenta
+XTerm*color5:           #75507B
+XTerm*color13:          #AD7FA8
+! cyan
+XTerm*color6:           #06989A
+XTerm*color14:          #34E2E2
+! white
+XTerm*color7:           #D3D7CF
+XTerm*color15:          #EEEEEC

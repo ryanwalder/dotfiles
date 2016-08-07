@@ -1,0 +1,30 @@
+### Conky configuration file
+
+out_to_x no
+own_window no
+out_to_console yes
+double_buffer no
+background no
+update_interval 1
+
+total_run_times 0
+short_units yes
+
+if_up_strictness address
+use_spacer left
+override_utf8_locale no
+cpu_avg_samples 1
+
+use_xft yes
+xftfont Terminus:size=9
+
+TEXT
+[
+{"full_text": "${fs_free /}/${fs_used /}",                  	"color":"\#ACACAC"},
+{"full_text": "L:${addr em1}",                               	"color":"\#ACACAC"},
+{"full_text": "R:${diskio_read} W:${diskio_write}",             "color":"\#ACACAC"},
+{"full_text": "RAM: ${memperc}%",                               "color":"\#ACACAC"},
+{"full_text": "CPU: ${cpu cpu1}%",                              "color":"\#ACACAC"},
+{"full_text": "BAT: ${battery_percent BAT1}%",                  "color":"\#ACACAC"},
+{"full_text": "${time %Y-%m-%d} ${time %H:%M:%S}",              "color":"\#EFEFEF"}
+],

@@ -1,0 +1,50 @@
+# ~/.bash_aliases called by ~/.bashrc
+
+# Alias definitions.
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# some more ls aliases
+alias ll='ls -l'
+alias la='ls -al'
+alias mtr='mtr -t'
+
+# Navigation...
+alias ..='cd ../'
+alias ...='cd ../../'
+alias ....='cd ../../../'
+
+# GCP
+alias gcls='gcloud compute instances list'
+alias gsls='gsutil ls'
+
+# Vagrant
+function vagrant_destroy() {
+    vagrant destroy -f "$1"
+}
+
+function vagrant_up() {
+    vagrant up "$1" && vagrant ssh "$1"
+}
+
+function vagrant_down_up() {
+    vagrant destroy -f "$1" && vagrant up "$1" && vagrant ssh "$1"
+}
+
+function vagrant_up_ssh() {
+    vagrant up "$1" && vagrant ssh "$1"
+}
+
+alias vd="vagrant_destroy"
+alias vls="vagrant status | grep -E '(lxc)'"
+alias vup="vagrant up"
+alias vus="vagrant_up_ssh"
+alias vud="vagrant_down_up"
+alias git-yolo='git commit -am "`curl -s http://whatthecommit.com/index.txt`"'
