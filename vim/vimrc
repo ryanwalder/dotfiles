@@ -6,13 +6,16 @@ hi clear SpellBad
 hi SpellBad cterm=underline ctermfg=red
 
 """"""" defaults
+"" colours
 syntax on
+set t_Co=256
+set background=light
+
 set nocompatible
 set backspace=2
 set showmode
 set nrformats-=octal
 filetype plugin indent on
-set t_Co=256
 set nofoldenable
 " slow as shit highlighting on new
 set regexpengine=1
@@ -34,6 +37,7 @@ map <F1> :set nu!<CR>:set relativenumber!<CR>
 map <F7> mzgg=G`z<CR>
 map <F8> :StripWhitespace<CR>
 map <F12> :set spell!<CR>
+inoremap <S-Tab> <C-V><Tab>
 
 """"""" movement
 " make navigating splits easier

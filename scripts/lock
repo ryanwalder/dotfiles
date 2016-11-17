@@ -1,0 +1,22 @@
+#! /usr/bin/env bash
+
+# Lock screen script for i3, should degrade nicely if deps are not installed
+
+unset gm_installed
+unset tmp_dir
+unset tmp_sshot
+
+function is_installed() {
+    local installed=0
+    type $1 >/dev/null 2>&1 || { local installed=1; }
+    echo $installed
+}
+
+tmp_dir="$(mktemp)"
+tmp_sshot="${tmp_dir}/sshot.png"
+
+if is_installed gm; then
+    gm=1
+elif is_installed convert; then
+    im=1
+fi

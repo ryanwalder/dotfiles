@@ -27,7 +27,11 @@ alias gsls='gsutil ls'
 
 # Vagrant
 function vagrant_destroy() {
-    vagrant destroy -f "$1"
+    if [[ -z $1 ]]; then
+        vagrant destroy -f
+    else
+        vagrant destroy -f "$1"
+    fi
 }
 
 function vagrant_up() {
@@ -43,8 +47,12 @@ function vagrant_up_ssh() {
 }
 
 alias vd="vagrant_destroy"
-alias vls="vagrant status | grep -E '(lxc)'"
+alias vssh="vagrant ssh"
+alias vls="vagrant status | grep -E '(lzx|virtualbox)'"
 alias vup="vagrant up"
 alias vus="vagrant_up_ssh"
 alias vud="vagrant_down_up"
+
+# lazy
 alias git-yolo='git commit -am "`curl -s http://whatthecommit.com/index.txt`"'
+alias docs='mkdocs serve'
