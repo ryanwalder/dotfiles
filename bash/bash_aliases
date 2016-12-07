@@ -54,5 +54,4 @@ alias vus="vagrant_up_ssh"
 alias vud="vagrant_down_up"
 
 # lazy
-alias git-yolo='git commit -am "`curl -s http://whatthecommit.com/index.txt`"'
 alias docs='mkdocs serve'

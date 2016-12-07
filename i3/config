@@ -182,7 +182,7 @@ exec-always --no-startup-id i3-msg exec '~/docs.bash &>~/docs.log'
 
 ## Custom Bindings
 bindsym $mod+shift+f exec thunar
-bindsym mod1+ctrl+l exec /usr/bin/i3lock --tiling --image ~/wallpapers/showmewhatyougot.png
+bindsym mod1+ctrl+l exec ~/bin/lockscreen
 
 # Media keys
 bindsym $mod+F12 exec /usr/bin/amixer -q set Master 1%+ unmute && pkill -RTMIN+2 i3blocks
