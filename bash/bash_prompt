@@ -1,7 +1,9 @@
+# vi: set ft=sh :
+
 function _show_git_status {
   # Get the current git branch and colorize to indicate branch state
   # branch_name+ indicates there are stash(es)
-  # branch_name? indicates there are untracked files                        
+  # branch_name? indicates there are untracked files
   # branch_name! indicates your branches have diverged
   local unknown untracked stash clean ahead behind staged unstaged diverged
   unknown='0;34'      # blue
