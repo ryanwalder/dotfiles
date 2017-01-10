@@ -20,7 +20,7 @@ eg(){
 # some more ls aliases
 alias ll='ls -l'
 alias la='ls -al'
-alias mtr='mtr -t'
+alias mtr='mtr --curses'
 
 # Navigation...
 alias ..='cd ../'
@@ -40,10 +40,6 @@ function vagrant_destroy() {
     fi
 }
 
-function vagrant_up() {
-    vagrant up "$1" && vagrant ssh "$1"
-}
-
 function vagrant_down_up() {
     vagrant destroy -f "$1" && vagrant up "$1" && vagrant ssh "$1"
 }
@@ -54,7 +50,7 @@ function vagrant_up_ssh() {
 
 alias vd="vagrant_destroy"
 alias vssh="vagrant ssh"
-alias vls="vagrant status | grep -E '(lzx|virtualbox)'"
+alias vls="vagrant status | grep -E '(lxc|virtualbox)'"
 alias vup="vagrant up"
 alias vus="vagrant_up_ssh"
 alias vud="vagrant_down_up"

@@ -1,4 +1,4 @@
 # vi: set ft=sh :
 
 export PAGER="less"
-export LESS="-isM"
+export EDITOR="/usr/bin/vim"

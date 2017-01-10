@@ -20,6 +20,12 @@ if [ -f ~/.bash_envars ]; then
     . ~/.bash_envars
 fi
 
+# Load secret envars (not uploaded to git....)
+if [ -f ~/.bash_secrets ]; then
+    . ~/.bash_secrets
+fi
+
+
 # Load colours
 if [ -f ~/.bash_colours ]; then
     . ~/.bash_colours
