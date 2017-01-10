@@ -7,7 +7,7 @@
     rim = rebase -i upstream/master
     sum = log upstream/master..HEAD  --pretty=format:'* %s' --reverse
     pom = push origin master
-    pr = !hub pull-request
+    pr = !git push && hub pull-request
     co = checkout
     br = branch
     unadd = reset HEAD
@@ -16,3 +16,5 @@
     yolo = !git add . && git commit -m \"$(curl -s http://whatthecommit.com/index.txt)\" && git push origin master -f
 [core]
     editor = vim
+[push]
+    default = simple
