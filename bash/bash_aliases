@@ -49,6 +49,7 @@ function vagrant_up_ssh() {
 }
 
 alias vd="vagrant_destroy"
+alias vp="vagrant provision"
 alias vssh="vagrant ssh"
 alias vls="vagrant status | grep -E '(lxc|virtualbox)'"
 alias vup="vagrant up"

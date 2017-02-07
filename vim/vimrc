@@ -19,7 +19,8 @@ filetype plugin indent on
 set nofoldenable
 " slow as shit highlighting on new
 set regexpengine=1
-set mouse=c
+set mouse=v
+set ttymouse=xterm2
 
 """"""" binds
 let mapleader = "\<Space>"
