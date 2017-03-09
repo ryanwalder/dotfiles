@@ -1,7 +1,22 @@
-" plugin loading with pathogen
-execute pathogen#infect()
+" plugin loading with Vundle
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-""" colurs
+" plugins to load
+Plugin 'tpope/vim-fugitive'
+Plugin 'bling/vim-airline'
+Plugin 'saltstack/salt-vim'
+Plugin 'rodjek/vim-puppet'
+Plugin 'Glench/Vim-Jinja2-Syntax'
+Plugin 'ekalinin/Dockerfile.vim'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'markcornick/vim-terraform'
+Plugin 'chase/vim-ansible-yaml'
+Plugin 'reewr/vim-monokai-phoenix'
+Plugin 'ntpeters/vim-better-whitespace'
+call vundle#end()
+
+""" Spelling
 hi clear SpellBad
 hi SpellBad cterm=underline ctermfg=red
 
@@ -10,6 +25,7 @@ hi SpellBad cterm=underline ctermfg=red
 syntax on
 set t_Co=256
 set background=light
+highlight Comment ctermfg=blue
 
 set nocompatible
 set backspace=2
@@ -19,8 +35,8 @@ filetype plugin indent on
 set nofoldenable
 " slow as shit highlighting on new
 set regexpengine=1
-set mouse=v
-set ttymouse=xterm2
+set mouse=
+
 
 """"""" binds
 let mapleader = "\<Space>"
@@ -83,7 +99,7 @@ if !exists('g:airline_symbols')
 endif
 let g:airline_symbols.space = "\ua0"
 set laststatus=2
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 
 " generate 128char string
 nnoremap <F6> :r! pwgen 128 -s -1<CR>kJ

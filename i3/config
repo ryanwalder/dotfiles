@@ -2,6 +2,9 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+# i3 options
+workspace_auto_back_and_forth yes
+
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -12,7 +15,7 @@ font Terminus TTF 28
 #bindsym $mod+F3            exec ((synclient -l | egrep "TouchpadOff.*= *0") && synclient TouchpadOff=1) || synclient TouchpadOff=0
 
 # start a terminal
-bindsym $mod+Return exec rxvt-unicode
+bindsym $mod+Return exec xterm
 
 # kill focused window
 bindsym $mod+Shift+q kill
