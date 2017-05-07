@@ -21,28 +21,28 @@ shopt -s checkwinsize
 
 # Load envars
 if [ -f ~/.bash_envars ]; then
-    . ~/.bash_envars
+    . ~/.config/dotfiles/bash_envars
 fi
 
 # Load secret envars (not uploaded to git....)
 if [ -f ~/.bash_secrets ]; then
-    . ~/.bash_secrets
+    . ~/.config/dotfiles/bash_secrets
 fi
 
 
 # Load colours
 if [ -f ~/.bash_colours ]; then
-    . ~/.bash_colours
+    . ~/.config/dotfiles/bash_colours
 fi
 
 # Load aliases
 if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+    . ~/.config/dotfiles/bash_aliases
 fi
 
 # Load prompt
 if [ -f ~/.bash_prompt ]; then
-    . ~/.bash_prompt
+    . ~/.config/dotfiles/bash_prompt
 else
     function _build_prompt {
       PS1="\u@\h:\w\$ "
