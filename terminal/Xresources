@@ -9,15 +9,20 @@ xterm*scrollstyle:      plain
 xterm*scrollBar:        false
 xterm*cursorBlink:      false
 xterm*cursorUnderline:  false
+xterm*metaSendsEscape:  true
+xterm*eightBitInput:    false
+xterm*backarrowKey:     false
+xterm*ttyModes:         erase ^?
+xterm*charClass:        33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
 
-! xterm fixes
-! fix alt
-xterm*metaSendsEscape: true
-xterm*eightBitInput: false
-xterm*backarrowKey: false
-xterm*ttyModes: erase ^?
-
-xterm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
+! rxvt
+urxvt*termName:             rxvt-unicode-256color
+urxvt.scrollBar:            false
+urxvt*scrollTtyOutput:      false
+urxvt*scrollWithBuffer:     true
+urxvt*scrollTtyKeypress:    true
+urxvt.font:                 xft:Terminus:size=8,xft:PowerlineSymbols:size=8
+urxvt.letterSpace:          true
 
 ! color scheme:
 *background:       #000000

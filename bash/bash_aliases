@@ -51,10 +51,16 @@ function vagrant_up_ssh() {
 alias vd="vagrant_destroy"
 alias vp="vagrant provision"
 alias vssh="vagrant ssh"
-alias vls="vagrant status | grep -E '(lxc|virtualbox)'"
+alias vls="vagrant status | grep -E '(lxc|virtualbox|docker)'"
 alias vup="vagrant up"
 alias vus="vagrant_up_ssh"
 alias vud="vagrant_down_up"
 
 # lazy
 alias docs='mkdocs serve'
+alias colours='for code in {0..255}; do echo -e "\e[38;05;${code}m $code: Test"; done'
+
+# venv wrapper
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Devel
+source /usr/local/bin/virtualenvwrapper.sh

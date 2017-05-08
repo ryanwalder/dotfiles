@@ -2,21 +2,37 @@
     name = Ryan Walder
     email = ryan.walder@gmail.com
 [alias]
+    # Work on origin
+    ro = !git rebase origin/$(git symbolic-ref HEAD | sed 's!refs\\/heads\\/!!')
+    rio = !git rebase -i origin/$(git symbolic-ref HEAD | sed 's!refs\\/heads\\/!!')
+    som = !git log origin/$(git symbolic-ref HEAD | sed 's!refs\\/heads\\/!!')..HEAD  --pretty=format:'* %s' --reverse
+    # Work on upgtream (github etc...)
     fu = fetch upstream
     rum = rebase upstream/master
     rim = rebase -i upstream/master
     sum = log upstream/master..HEAD  --pretty=format:'* %s' --reverse
-    pom = push origin master
-    pr = !git push && hub pull-request
+    # Lazy
+    f = fetch
     co = checkout
     br = branch
+    cp = cherry-pick
     unadd = reset HEAD
+    undo = reset --soft HEAD^
     pullff = pull --ff-only
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     yolo = !git add . && git commit -m \"$(curl -s http://whatthecommit.com/index.txt)\" && git push origin master -f
 [core]
     editor = vim
+[merge]
+    ff = only
 [push]
     default = simple
+    followTags = true
+[rebase]
+    autostash = true
+[status]
+    showUntrackedFiles = all
+[transfer]
+    fsckobjects = true
 [credential]
 	helper = cache --timeout=28800

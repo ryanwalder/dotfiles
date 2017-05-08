@@ -1,4 +1,4 @@
-" plugin loading with pathogen
+" plugin loading with Pathogen
 execute pathogen#infect()
 
 """ Spelling
@@ -25,10 +25,6 @@ set mouse=
 
 """"""" binds
 let mapleader = "\<Space>"
-
-
-" git commit
-map <F9> :Gwrite<CR>:let @" =expand('%:t')<CR>:Gcommit<CR>pA:<Space>
 
 " pasting
 nnoremap <F2> :set invpaste paste?<CR>
@@ -85,6 +81,9 @@ endif
 let g:airline_symbols.space = "\ua0"
 set laststatus=2
 let g:airline_powerline_fonts = 1
+
+" vim-json
+let g:vim_json_syntax_conceal = 0
 
 " generate 128char string
 nnoremap <F6> :r! pwgen 128 -s -1<CR>kJ
