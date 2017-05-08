@@ -21,15 +21,15 @@ HISTFILESIZE=500000
 shopt -s checkwinsize
 
 # Load subfiles
-dir="~/.config/bash"
 files=(
-    ~/.config/dotfiles/bash/bash_envars
-    ~/.config/dotfiles/bash/bash_colours
     ~/.config/dotfiles/bash/bash_aliases
+    ~/.config/dotfiles/bash/bash_colours
+    ~/.config/dotfiles/bash/bash_envars
+    ~/.config/dotfiles/bash/bash_profile
     ~/.bash_secrets
 )
 
-for file in $files; do
+for file in ${files}; do
     if [ -f "${file}" ]; then
         source "${file}"
     fi
