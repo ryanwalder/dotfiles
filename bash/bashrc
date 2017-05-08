@@ -9,8 +9,9 @@ case $- in
 esac
 
 # don't put duplicate lines or lines starting with space in the history.
-HISTCONTROL=ignoreboth
 # append to the history file, don't overwrite it
+# make it large
+HISTCONTROL=ignoreboth
 shopt -s histappend
 HISTSIZE=50000
 HISTFILESIZE=500000
@@ -19,30 +20,24 @@ HISTFILESIZE=500000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# Load envars
-if [ -f ~/.bash_envars ]; then
-    . ~/.config/dotfiles/bash_envars
-fi
+# Load subfiles
+dir="~/.config/bash"
+files=(
+    ~/.config/dotfiles/bash/bash_envars
+    ~/.config/dotfiles/bash/bash_colours
+    ~/.config/dotfiles/bash/bash_aliases
+    ~/.bash_secrets
+)
 
-# Load secret envars (not uploaded to git....)
-if [ -f ~/.bash_secrets ]; then
-    . ~/.config/dotfiles/bash_secrets
-fi
+for file in $files; do
+    if [ -f "${file}" ]; then
+        source "${file}"
+    fi
+done
 
-
-# Load colours
-if [ -f ~/.bash_colours ]; then
-    . ~/.config/dotfiles/bash_colours
-fi
-
-# Load aliases
-if [ -f ~/.bash_aliases ]; then
-    . ~/.config/dotfiles/bash_aliases
-fi
-
-# Load prompt
-if [ -f ~/.bash_prompt ]; then
-    . ~/.config/dotfiles/bash_prompt
+# Load prompt seperately so we don't end up without a PS1
+if [ -f ~/.config/dotfiles/bash/bash_prompt ]; then
+    source ~/.config/dotfiles/bash/bash_prompt
 else
     function _build_prompt {
       PS1="\u@\h:\w\$ "
@@ -54,9 +49,9 @@ fi
 # enable programmable completion features
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
+    source /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
+    source /etc/bash_completion
   fi
 fi
 
