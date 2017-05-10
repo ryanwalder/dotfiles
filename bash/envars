@@ -8,11 +8,5 @@ if [[ $(hostname) == "tfu" ]]; then
 fi
 
 if [[ -f ~/.bash_work ]]; then
-  source ~/.bash_work
+    source ~/.bash_work
 fi
-
-#if [[ -f /lib/terminfo//x/xterm-256color ]]; then
-#    export TERM='xterm-256color'
-#else
-#    export TERM='xterm-color'
-#fi

@@ -20,24 +20,24 @@ HISTFILESIZE=500000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# Load subfiles
-files=(
-    ~/.config/dotfiles/bash/bash_aliases
-    ~/.config/dotfiles/bash/bash_colours
-    ~/.config/dotfiles/bash/bash_envars
-    ~/.config/dotfiles/bash/bash_profile
+# Load subfiles, always load secrets first, envars used in other files
+dotfiles=(
     ~/.bash_secrets
+    ~/.config/dotfiles/bash/aliases
+    ~/.config/dotfiles/bash/envars
+    ~/.config/dotfiles/bash/logout
+    ~/.config/dotfiles/bash/profile
 )
 
-for file in ${files}; do
-    if [ -f "${file}" ]; then
-        source "${file}"
+for file in "${dotfiles[@]}"; do
+    if [[ -f "${file}" ]]; then
+        . "${file}"
     fi
 done
 
 # Load prompt seperately so we don't end up without a PS1
-if [ -f ~/.config/dotfiles/bash/bash_prompt ]; then
-    source ~/.config/dotfiles/bash/bash_prompt
+if [ -f ~/.config/dotfiles/bash/prompt ]; then
+    source ~/.config/dotfiles/bash/prompt
 else
     function _build_prompt {
       PS1="\u@\h:\w\$ "
