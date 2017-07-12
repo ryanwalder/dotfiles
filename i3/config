@@ -168,20 +168,19 @@ client.urgent                   $rd         $rd         $tx
 new_window pixel 2
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-        colors {
-            background          $bg
-            statusline          $fg
-            separator           $ac
-            focused_workspace   $ac         $ac          $tx
-            active_workspace    $ac         $bg          $tx
-            inactive_workspace  $bg         $bg          $ia
-            urgent_workspace    $bg         $bg          $ac
-        }
-        position top
-        status_command i3blocks
-        font pango:Noto Mono 8, Awesome 10
-}
+#bar {
+#        colors {
+#            background          $bg
+#            statusline          $fg
+#            separator           $ac
+#            focused_workspace   $ac         $ac          $tx
+#            active_workspace    $ac         $bg          $tx
+#            inactive_workspace  $bg         $bg          $ia
+#            urgent_workspace    $bg         $bg          $ac
+#        }
+#        status_command i3blocks -c ~/.i3/bars
+#}
+exec_always --no-startup-id ~/.i3/bars
 
 ## Custom Bindings
 bindsym $mod+shift+f exec thunar
@@ -195,6 +194,3 @@ bindsym $mod+Scroll_Lock exec /usr/bin/playerctl next && pkill -RTMIN+1 i3blocks
 bindsym $mod+Print exec /usr/bin/playerctl previous && pkill -RTMIN+1 i3blocks
 
 # Startup
-#exec_always --no-startup-id killall polybar; polybar top -c "~/.config/polybar/config"
-
-

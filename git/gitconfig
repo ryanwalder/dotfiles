@@ -12,9 +12,10 @@
     rim = rebase -i upstream/master
     sum = log upstream/master..HEAD  --pretty=format:'* %s' --reverse
     # Lazy
-    f = fetch
+    f = fetch --all
     co = checkout
     br = branch
+    st = status
     cp = cherry-pick
     unadd = reset HEAD
     undo = reset --soft HEAD^
@@ -36,3 +37,5 @@
     fsckobjects = true
 [credential]
 	helper = cache --timeout=28800
+[fetch]
+	prune = true
