@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # start agent and set environment variables, if needed
 agent_started=0
 if ! env | grep -q SSH_AGENT_PID >/dev/null; then
@@ -6,7 +7,7 @@ if ! env | grep -q SSH_AGENT_PID >/dev/null; then
   agent_started=1
 fi
 
-# ssh become a function, adding identity to agent when needed
+# make ssh a function, add the identity to agent when needed
 ssh() {
   if ! ssh-add -l >/dev/null 2>&-; then
     ssh-add ~/.ssh/id_rsa

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if [[ $(hostname) == 'lt00250' ]]; then
+    if xrandr | grep DVI-I-1-1 | grep -q " connected "; then
+        xrandr --output DVI-I-1-1 --right-of eDP1 --mode 1920x1200
+        xrandr --output DVI-I-2-2 --right-of DVI-I-1-1 --mode 1920x1200
+    else
+        xrandr --output DVI-I-1-1 --off --screen 0
+        xrandr --output DVI-I-2-2 --off --screen 0
+    fi
+fi

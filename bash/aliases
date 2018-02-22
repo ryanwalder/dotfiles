@@ -1,5 +1,22 @@
 # Alias definitions.
 
+# enable/start ssh agent
+agent_started=0
+if ! env | grep -q SSH_AGENT_PID >/dev/null; then
+  echo "Starting ssh agent"
+  eval $(ssh-agent -s)
+  agent_started=1
+fi
+
+# make ssh a function, add the identity to agent when needed
+ssh() {
+  if ! ssh-add -l >/dev/null 2>&-; then
+    ssh-add ~/.ssh/id_rsa
+  fi
+  /usr/bin/ssh "$@"
+}
+export -f ssh
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -39,7 +56,7 @@ function vagrant_destroy() {
 }
 
 function vagrant_down_up() {
-    vagrant destroy -f "$1" && vagrant up "$1" && vagrant ssh "$1"
+    vagrant destroy -f "$1" ; vagrant up "$1" && vagrant ssh "$1"
 }
 
 function vagrant_up_ssh() {
@@ -54,14 +71,16 @@ alias vup="vagrant up"
 alias vus="vagrant_up_ssh"
 alias vud="vagrant_down_up"
 
+# Docker
+dnfo() {
+    sudo docker stop $(sudo docker ps -a -q)
+    sudo docker rm $(sudo docker ps -a -q)
+    sudo docker rmi $(sudo docker images -q)
+}
+
 # lazy
 alias docs='mkdocs serve'
 alias colours='for code in {0..255}; do echo -e "\e[38;05;${code}m $code: Test"; done'
-
-# venv wrapper
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Devel
-source /usr/local/bin/virtualenvwrapper.sh
 
 # Ansible
 alias ansible-vault='ansible-vault --vault-password-file=$ANSIBLE_VAULT_PASSWORD_FILE'
