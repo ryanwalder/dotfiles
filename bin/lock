@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 
-i3lock --color=000000
+image="${HOME}/.cache/scrot.png"
+image_processed="${HOME}/.cache/lock.png"
+
+scrot -e 'mv $f '"${image}"''
+convert ${image} -scale 10% -scale 1000% ${image}
+i3lock -i ${image}
+rm ${image}
