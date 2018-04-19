@@ -1,11 +1,29 @@
 #!/usr/bin/env bash
 
-if [[ $(hostname) == 'lt00250' ]]; then
-    if xrandr | grep DVI-I-1-1 | grep -q " connected "; then
-        xrandr --output DVI-I-1-1 --right-of eDP1 --mode 1920x1200
-        xrandr --output DVI-I-2-2 --right-of DVI-I-1-1 --mode 1920x1200
-    else
-        xrandr --output DVI-I-1-1 --off --screen 0
-        xrandr --output DVI-I-2-2 --off --screen 0
-    fi
-fi
+hostname=$(hostname -s)
+
+is_connected() {
+  if xrandr | grep "$1" | grep -q " connected"; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+
+if [[ "${hostname}" == "tfu" ]]; then
+  dell_right="DP-1-1"
+  dell_left="DP-1-2"
+  predator="DP-2-2"
+  laptop="eDP-1"
+
+  # If externals plugged in
+  if is_connected ${predator} && is_connected ${dell_left} && is_connected ${dell_right}; then
+    xrandr --output ${laptop} --off \
+           --output ${dell_right} --mode 1920x1080 \
+           --output ${predator} --mode 3440x1440 --left-of ${dell_right} --primary\
+           --output ${dell_left} --mode 2560x1440 --left-of ${predator} --rotate left
+  fi
+else # Just laptop
+    xrandr --output ${laptop} --mode 1920x1080
+fi 
