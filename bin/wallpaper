@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+DISPLAY=:0.0 feh --bg-max "$(find ~/wallpapers/|shuf -n1)

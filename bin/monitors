@@ -20,10 +20,10 @@ if [[ "${hostname}" == "tfu" ]]; then
   # If externals plugged in
   if is_connected ${predator} && is_connected ${dell_left} && is_connected ${dell_right}; then
     xrandr --output ${laptop} --off \
-           --output ${dell_right} --mode 1920x1080 \
-           --output ${predator} --mode 3440x1440 --left-of ${dell_right} --primary\
-           --output ${dell_left} --mode 2560x1440 --left-of ${predator} --rotate left
+           --output ${dell_right} --auto \
+           --output ${predator} --auto --left-of ${dell_right} --primary \
+           --output ${dell_left} --auto --left-of ${predator} --rotate left
   fi
 else # Just laptop
-    xrandr --output ${laptop} --mode 1920x1080
-fi 
+    xrandr --output ${laptop} --auto
+fi
