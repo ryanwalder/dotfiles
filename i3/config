@@ -22,7 +22,7 @@ font Terminus TTF 28
 
 # start a terminal
 #bindsym $mod+Return exec gnome-terminal
-bindsym $mod+Return exec xfce4-terminal
+bindsym $mod+Return exec gnome-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -196,4 +196,4 @@ bindsym $mod+Scroll_Lock exec /usr/bin/playerctl next && pkill -RTMIN+1 i3blocks
 bindsym $mod+Print exec /usr/bin/playerctl previous && pkill -RTMIN+1 i3blocks
 
 # Startup
-exec --no-startup-id ~/bin/monitors.bash
+exec --no-startup-id ~/bin/monitors
