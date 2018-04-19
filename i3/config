@@ -186,7 +186,7 @@ exec_always --no-startup-id ~/.i3/bars
 
 ## Custom Bindings
 bindsym $mod+shift+f exec thunar
-bindsym mod1+ctrl+l exec i3lock
+bindsym mod1+ctrl+l exec ~/bin/lock
 # Media keys
 bindsym $mod+F12 exec /usr/bin/amixer -q set Master 1%+ unmute && pkill -RTMIN+2 i3blocks
 bindsym $mod+F11 exec /usr/bin/amixer -q set Master 1%- unmute && pkill -RTMIN+2 i3blocks
