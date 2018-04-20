@@ -1,0 +1,189 @@
+[colors]
+background  = #393939
+foreground  = #EEEEEE
+linecolor   = #FBA922
+bordercolor = #000000
+accent      = #D75F00
+icon        = #D75F00
+urgent      = #00D7A5
+ramp-0      = #FB0C06
+ramp-1      = #FB0C06
+ramp-2      = #FFC52C
+ramp-3      = #FFC52C
+ramp-4      = #D75F00
+
+[settings]
+screenchange-reload = true
+
+[global/wm]
+margin-top    = 0
+margin-bottom = 0
+
+[bar/base]
+enable-ipc          = true
+width               = 100%
+height              = 24
+background          = ${colors.background}
+foreground          = ${colors.foreground}
+line-color          = ${colors.linecolor}
+underline-size      = 1
+overline-size       = 2
+font-0              = Font Awesome 5 Free Regular:size=10;0
+font-1              = Font Awesome 5 Free Solid:size=10;0
+font-2              = Font Awesome 5 Brands Regular:size=10;0
+font-3              = FontAwesome:size=10;0
+font-4              = Roboto:size=10;0
+padding-left        = 0
+padding-right       = 2
+module-margin-left  = 1
+module-margin-right = 2
+border-bottom-color = ${colors.bordercolor}
+scroll-up           = i3wm-wsnext
+scroll-down         = i3wm-wsprev
+
+[bar/predator]
+inherit        = bar/base
+monitor        = DP-2-2
+modules-left   = i3
+modules-right  = wired-home wifi fs memory cpu-load battery date time
+tray-position  = right
+tray-padding   = 4
+tray-maxsize   = 16
+
+[bar/dell_left]
+inherit        = bar/base
+monitor        = DP-1-2
+modules-left   = i3
+modules-right  = date time
+
+[bar/dell_right]
+inherit        = bar/base
+monitor        = DP-1-1
+modules-left   = i3
+modules-right  = date time
+
+[module/i3]
+type                     = internal/i3
+index-sort               = true
+pin-workspaces           = true
+wrapping-scroll          = false
+format                   = <label-state> <label-mode>
+label-mode               = %mode%
+label-mode-padding       = 5
+label-mode-background    = ${colors.accent}
+label-focused            = %index%
+label-focused-background = ${colors.accent}
+label-focused-foreground = ${colors.foreground}
+label-focused-padding    = ${self.label-mode-padding}
+label-unfocused          = %index%
+label-unfocused-padding  = ${self.label-mode-padding}
+label-urgent             = %index%!
+label-urgent-background  = ${colors.urgent}
+label-urgent-padding     = ${self.label-mode-padding}
+label-visible            = %index%
+label-visible-padding    = ${self.label-mode-padding}
+
+[module/date]
+type                     = internal/date
+label                    = %date%
+date                     = %Y-%m-%d
+interval                 = 60
+format-prefix            = " "
+format-prefix-foreground = ${colors.icon}
+
+[module/time]
+type                     = internal/date
+label                    = %time%
+time                     = %H:%M:%S
+interval                 = 1
+format-prefix            = " "
+format-prefix-foreground = ${colors.icon}
+
+[module/fs]
+type                             = internal/fs
+mount-0                          = /
+label-mounted                    = %total%/%free%
+format-mounted                   = <label-mounted>
+format-mounted-prefix            = " "
+format-mounted-prefix-foreground = ${colors.icon}
+
+[module/cpu-load]
+type                     = custom/script
+exec                     = awk '{print $1" "$2" "$3}' < /proc/loadavg
+interval                 = 2
+format-prefix            = " "
+format-prefix-foreground = ${colors.icon}
+
+[module/memory]
+type                     = internal/memory
+interval                 = 2
+format                   = <label>
+label                    = %gb_total%/%gb_used%
+format-prefix            = " "
+format-prefix-foreground = ${colors.icon}
+
+[module/battery]
+type                   = internal/battery
+full-at                = 99
+; $ ls -1 /sys/class/power_supply/
+battery       = BAT0
+adapter       = AC
+poll-interval = 5
+
+label-charging  = " %time%"
+format-charging = <animation-charging> <label-charging>
+
+label-discharging  = " %time%"
+format-discharging = <ramp-capacity> <label-discharging>
+
+label-full                    = %percentage%%
+format-full                   = <label-full>
+format-full-prefix            = " "
+format-full-prefix-foreground = ${colors.ramp-4}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-0-foreground = ${colors.ramp-0}
+ramp-capacity-1-foreground = ${colors.ramp-1}
+ramp-capacity-2-foreground = ${colors.ramp-2}
+ramp-capacity-3-foreground = ${colors.ramp-3}
+ramp-capacity-4-foreground = ${colors.ramp-4}
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-0-foreground = ${colors.ramp-0}
+animation-charging-1-foreground = ${colors.ramp-1}
+animation-charging-2-foreground = ${colors.ramp-2}
+animation-charging-3-foreground = ${colors.ramp-3}
+animation-charging-4-foreground = ${colors.ramp-4}
+animation-charging-framerate = 750
+
+[module/wifi]
+type                               = internal/network
+interface                          = wlp2s0
+interval                           = 3.0
+format-connected                   = <label-connected>
+format-connected-prefix            = " "
+format-connected-prefix-foreground = ${colors.icon}
+format-connected-prefix-offset     = -6
+label-connected                    = %essid% %signal%% %local_ip% %downspeed:8%%upspeed:8%
+
+format-disconnected = <label-disconnected>
+format-disconnected-prefix = " "
+format-disconnected-prefix-foreground = ${colors.foreground}
+label-disconnected = ""
+label-disconnected-foreground = ${colors.foreground}
+
+[module/wired-home]
+type = internal/network
+interface = enx10653096a7c0
+interval = 3.0
+
+format-connected-prefix = "🖧 "
+format-connected-prefix-foreground = ${colors.icon}
+label-connected = %local_ip% %downspeed:8%%upspeed:8%
