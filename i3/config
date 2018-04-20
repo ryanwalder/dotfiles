@@ -195,6 +195,6 @@ bindsym $mod+Scroll_Lock exec /usr/bin/playerctl next && pkill -RTMIN+1 i3blocks
 bindsym $mod+Print exec /usr/bin/playerctl previous && pkill -RTMIN+1 i3blocks
 
 # Startup
-#exec_always --no-startup-id ~/.i3/polybar
+exec_always --no-startup-id ~/.i3/polybar
 exec --no-startup-id ~/bin/monitors
 exec --no-startup-id xautolock -time 5 -locker ~/bin/lock
