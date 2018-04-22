@@ -43,6 +43,15 @@ border-bottom-color = ${colors.bordercolor}
 scroll-up           = i3wm-wsnext
 scroll-down         = i3wm-wsprev
 
+[bar/laptop]
+inherit        = bar/base
+monitor        = eDP-1
+modules-left   = i3
+modules-right  = wired-home wifi fs memory cpu-load battery date time
+tray-position  = right
+tray-padding   = 4
+tray-maxsize   = 16
+
 [bar/predator]
 inherit        = bar/base
 monitor        = DP-2-2
@@ -56,13 +65,13 @@ tray-maxsize   = 16
 inherit        = bar/base
 monitor        = DP-1-2
 modules-left   = i3
-modules-right  = date time
+modules-right  = battery date time
 
 [bar/dell_right]
 inherit        = bar/base
 monitor        = DP-1-1
 modules-left   = i3
-modules-right  = date time
+modules-right  = battery date time
 
 [module/i3]
 type                       = internal/i3
@@ -106,7 +115,7 @@ format-prefix-foreground = ${colors.icon}
 [module/fs]
 type                             = internal/fs
 mount-0                          = /
-label-mounted                    = %total%/%free%
+label-mounted                    = %total%/%used%
 format-mounted                   = <label-mounted>
 format-mounted-prefix            = " "
 format-mounted-prefix-foreground = ${colors.icon}
@@ -114,13 +123,13 @@ format-mounted-prefix-foreground = ${colors.icon}
 [module/cpu-load]
 type                     = custom/script
 exec                     = awk '{print $1" "$2" "$3}' < /proc/loadavg
-interval                 = 2
+interval                 = 1
 format-prefix            = " "
 format-prefix-foreground = ${colors.icon}
 
 [module/memory]
 type                     = internal/memory
-interval                 = 2
+interval                 = 1
 format                   = <label>
 label                    = %gb_total%/%gb_used%
 format-prefix            = " "
@@ -140,8 +149,6 @@ format-charging = <animation-charging> <label-charging>
 label-discharging  = " %time%"
 format-discharging = <ramp-capacity> <label-discharging>
 
-label-full                    = %percentage%%
-format-full                   = <label-full>
 format-full-prefix            = " "
 format-full-prefix-foreground = ${colors.ramp-4}
 
@@ -153,24 +160,24 @@ ramp-capacity-4 = 
 ramp-capacity-0-foreground = ${colors.ramp-0}
 ramp-capacity-1-foreground = ${colors.ramp-1}
 ramp-capacity-2-foreground = ${colors.ramp-2}
-ramp-capacity-3-foreground = ${colors.ramp-3}
+ramp-capacity-3-foreground = ${colors.ramp-4}
 ramp-capacity-4-foreground = ${colors.ramp-4}
 animation-charging-0 = 
 animation-charging-1 = 
 animation-charging-2 = 
 animation-charging-3 = 
 animation-charging-4 = 
-animation-charging-0-foreground = ${colors.ramp-0}
-animation-charging-1-foreground = ${colors.ramp-1}
-animation-charging-2-foreground = ${colors.ramp-2}
-animation-charging-3-foreground = ${colors.ramp-3}
+animation-charging-0-foreground = ${colors.ramp-4}
+animation-charging-1-foreground = ${colors.ramp-4}
+animation-charging-2-foreground = ${colors.ramp-4}
+animation-charging-3-foreground = ${colors.ramp-4}
 animation-charging-4-foreground = ${colors.ramp-4}
 animation-charging-framerate = 750
 
 [module/wifi]
 type                               = internal/network
 interface                          = wlp2s0
-interval                           = 3.0
+interval                           = 3
 format-connected                   = <label-connected>
 format-connected-prefix            = " "
 format-connected-prefix-foreground = ${colors.icon}
@@ -186,7 +193,7 @@ label-disconnected-foreground = ${colors.foreground}
 [module/wired-home]
 type = internal/network
 interface = enx10653096a7c0
-interval = 3.0
+interval = 3
 
 format-connected-prefix = "🖧 "
 format-connected-prefix-foreground = ${colors.icon}
