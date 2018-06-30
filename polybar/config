@@ -184,12 +184,6 @@ format-connected-prefix-foreground = ${colors.icon}
 format-connected-prefix-offset     = -6
 label-connected                    = %essid% %signal%% %local_ip% %downspeed:8%%upspeed:8%
 
-format-disconnected = <label-disconnected>
-format-disconnected-prefix = " "
-format-disconnected-prefix-foreground = ${colors.foreground}
-label-disconnected = ""
-label-disconnected-foreground = ${colors.foreground}
-
 [module/wired-home]
 type = internal/network
 interface = enx10653096a7c0

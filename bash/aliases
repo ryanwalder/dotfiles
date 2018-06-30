@@ -1,5 +1,4 @@
 # Alias definitions.
-
 # enable/start ssh agent
 agent_started=0
 if ! env | grep -q SSH_AGENT_PID >/dev/null; then

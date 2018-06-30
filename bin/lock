@@ -3,7 +3,11 @@
 image="${HOME}/.cache/scrot.png"
 image_processed="${HOME}/.cache/lock.png"
 
-scrot -e 'mv $f '"${image}"''
-convert ${image} -scale 10% -scale 1000% ${image}
-i3lock -i ${image}
-rm ${image}
+#scrot -e 'mv $f '"${image}"''
+#convert ${image} -scale 10% -scale 1000% ${image}
+#i3lock -i ${image}
+#rm ${image}
+
+i3lock --color 393939
+sleep 300
+sytemctl suspend

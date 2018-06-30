@@ -3,27 +3,39 @@
 hostname=$(hostname -s)
 
 is_connected() {
-  if xrandr | grep "$1" | grep -q " connected"; then
-    return 0
-  else
-    return 1
-  fi
+    if xrandr | grep "$1" | grep -q " connected"; then
+        return 0
+    else
+        return 1
+    fi
 }
 
 
 if [[ "${hostname}" == "tfu" ]]; then
-  dell_right="DP-1-1"
-  dell_left="DP-1-2"
-  predator="DP-2-2"
-  laptop="eDP-1"
+    dell_right="DP-1-1"
+    dell_left="DP-1-2"
+    predator="DP-2-2"
+    laptop="eDP-1"
 
-  # If externals plugged in
-  if is_connected ${predator} && is_connected ${dell_left} && is_connected ${dell_right}; then
-    xrandr --output ${laptop} --off \
-           --output ${dell_right} --auto \
-           --output ${predator} --auto --left-of ${dell_right} --primary \
-           --output ${dell_left} --auto --left-of ${predator} --rotate left
-  fi
+    while getopts "l" arg; do
+        case $arg in
+            l)
+                xrandr --output ${laptop} --auto \
+                       --output ${dell_right} --off \
+                       --output ${predator} --off \
+                       --output ${dell_left} --off
+                exit 0
+                ;;
+        esac
+    done
+
+    # If externals plugged in
+    if is_connected ${predator} && is_connected ${dell_left} && is_connected ${dell_right}; then
+        xrandr --output ${laptop} --off \
+               --output ${dell_right} --auto \
+               --output ${predator} --auto --left-of ${dell_right} --primary \
+               --output ${dell_left} --auto --left-of ${predator} --rotate left
+    fi
 else # Just laptop
     xrandr --output ${laptop} --auto
 fi
