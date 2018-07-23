@@ -47,7 +47,7 @@ scroll-down         = i3wm-wsprev
 inherit        = bar/base
 monitor        = ${env:MONITOR}
 modules-left   = i3
-modules-right  = wired-home wifi fs memory cpu-load battery date time
+modules-right  = vpn wired-home wifi fs memory cpu-load battery date time
 tray-position  = right
 tray-padding   = 4
 tray-maxsize   = 16
@@ -168,6 +168,14 @@ format-connected-prefix            = " "
 format-connected-prefix-foreground = ${colors.icon}
 format-connected-prefix-offset     = -6
 label-connected                    = %essid% %signal%% %local_ip% %downspeed:8%%upspeed:8%
+
+[module/vpn]
+type = custom/script
+exec = echo " "
+exec-if = pgrep openvpn
+format-prefix = 
+format-prefix-foreground = ${colors.icon}
+interval = 5
 
 [module/wired-home]
 type = internal/network
