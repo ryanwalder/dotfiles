@@ -43,33 +43,18 @@ border-bottom-color = ${colors.bordercolor}
 scroll-up           = i3wm-wsnext
 scroll-down         = i3wm-wsprev
 
-[bar/laptop]
+[bar/main]
 inherit        = bar/base
-monitor        = eDP-1
+monitor        = ${env:MONITOR}
 modules-left   = i3
 modules-right  = wired-home wifi fs memory cpu-load battery date time
 tray-position  = right
 tray-padding   = 4
 tray-maxsize   = 16
 
-[bar/predator]
+[bar/side]
 inherit        = bar/base
-monitor        = DP-2-2
-modules-left   = i3
-modules-right  = wired-home wifi fs memory cpu-load battery date time
-tray-position  = right
-tray-padding   = 4
-tray-maxsize   = 16
-
-[bar/dell_left]
-inherit        = bar/base
-monitor        = DP-1-2
-modules-left   = i3
-modules-right  = battery date time
-
-[bar/dell_right]
-inherit        = bar/base
-monitor        = DP-1-1
+monitor        = ${env:MONITOR}
 modules-left   = i3
 modules-right  = battery date time
 
