@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+sudo killall -q openvpn
+
+if [[ -z "$1" ]]; then
+    for vpn in $(find ~/.openvpn -maxdepth 1 -iname '*.ovpn'); do
+        pushd ${vpn%/*} > /dev/null
+        sudo openvpn --config ${vpn##*/} --daemon
+        popd > /dev/null
+    done
+else
+    for vpn in $@; do
+        pushd ${vpn%/*} > /dev/null
+        sudo openvpn --config "${vpn##*/}" --daemon
+        popd > /dev/null
+    done
+fi
