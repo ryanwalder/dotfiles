@@ -108,16 +108,16 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 # Workspaces per monitor
-workspace  5 output DP-1-2
-workspace  6 output DP-1-2
-workspace  7 output DP-1-2
-workspace  1 output DP-2-2
-workspace  2 output DP-2-2
-workspace  3 output DP-2-2
-workspace  4 output DP-2-2
-workspace  8 output DP-1-1
-workspace  9 output DP-1-1
-workspace 10 output DP-1-1
+workspace  1 output DP-1-2
+workspace  2 output DP-1-2
+workspace  3 output DP-1-2
+workspace  4 output DP-1-2
+workspace  5 output eDP-1
+workspace  6 output eDP-1
+workspace  7 output eDP-1
+workspace  8 output DP-1-3
+workspace  9 output DP-1-3
+workspace 10 output DP-1-3
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -169,3 +169,4 @@ exec_always --no-startup-id ~/.config/polybar/bars
 exec --no-statup-id xset m 0/1 4 # disable mouse acceleration
 exec --no-startup-id ~/bin/monitors
 exec --no-startup-id xautolock -time 5 -locker ~/bin/lock
+exec --no-startup-id dunst
