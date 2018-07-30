@@ -16,6 +16,14 @@ ssh() {
 }
 export -f ssh
 
+git() {
+  if ! ssh-add -l >/dev/null 2>&-; then
+    ssh-add ~/.ssh/id_rsa
+  fi
+  /usr/bin/git "$@"
+}
+export -f git
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
