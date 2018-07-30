@@ -18,7 +18,7 @@
     st = status
     cp = cherry-pick
     unadd = reset HEAD
-    undo = reset --soft HEAD^
+    uncommit = reset HEAD~
     pullff = pull --ff-only
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     yolo = !git add . && git commit -m \"$(curl -s http://whatthecommit.com/index.txt)\" && git push origin master -f
@@ -39,3 +39,5 @@
 	helper = cache --timeout=28800
 [fetch]
 	prune = true
+[commit]
+  template = ~/.gitmessage
