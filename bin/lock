@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 
-image="${HOME}/.cache/scrot.png"
-image_processed="${HOME}/.cache/lock.png"
+# Suspend dunst
+pkill -u "$USER" -USR1 dunst
 
-#scrot -e 'mv $f '"${image}"''
-#convert ${image} -scale 10% -scale 1000% ${image}
-#i3lock -i ${image}
-#rm ${image}
+if [[ -f ~/.cache/wallpaper ]]; then
+    i3lock \
+        --nofork \
+        --image ~/.cache/wallpaper/current.png
+else
+    i3lock \
+        --nofork \
+        --color 393939
+fi
 
-i3lock --color 393939
-sleep 300
-sytemctl suspend
+# Resume dunst
+pkill -u "$USER" -USR2 dunst

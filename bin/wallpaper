@@ -3,5 +3,6 @@
 [[ -d ~/.cache/wallpaper ]] || mkdir ~/.cache/wallpaper
 
 image=$(find ~/.wallpapers/ | sed '1d' | shuf -n1)
-cp "${image}" ~/.cache/wallpaper/current
-DISPLAY=:0.0 feh --bg-max ~/.cache/wallpaper/current
+cached_image=~/.cache/wallpaper/current.png
+convert ${image} ${cached_image}
+DISPLAY=:0.0 feh --bg-max $cached_image

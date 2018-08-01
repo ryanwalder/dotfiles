@@ -157,8 +157,8 @@ bindsym XF86MonBrightnessUp   exec xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 
 # Duplicate media keys on standard keyboard
-bindsym $mod+F7              exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym $mod+F8              exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym $mod+F7              exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym $mod+F8              exec --no-startup-id pactl set-sink-volume 0 +5%
 bindsym $mod+F9              exec --no-startup-id pactl set-sink-mute 0 toggle
 bindsym $mod+F12             exec --no-startup-id /usr/bin/playerctl play-pause
 bindsym $mod+F11             exec --no-startup-id /usr/bin/playerctl next
@@ -170,3 +170,5 @@ exec --no-statup-id xset m 0/1 4 # disable mouse acceleration
 exec --no-startup-id ~/bin/monitors
 exec --no-startup-id xautolock -time 5 -locker ~/bin/lock
 exec --no-startup-id dunst
+exec --no-startup-id compton
+
