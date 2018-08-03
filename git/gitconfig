@@ -39,5 +39,3 @@
 	helper = cache --timeout=28800
 [fetch]
 	prune = true
-[commit]
-  template = ~/.gitmessage
