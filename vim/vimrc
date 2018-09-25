@@ -22,6 +22,9 @@ set nofoldenable
 set regexpengine=1
 set mouse=
 
+" disable ex mode
+nnoremap Q <Nop>
+
 
 """"""" binds
 let mapleader = "\<Space>"

@@ -11,15 +11,15 @@ is_connected() {
 }
 
 if [[ "${hostname}" == "ryanlaptop" ]]; then
-    dell_right="DP-1-3"
-    dell_left="DP-1-2"
     laptop="eDP-1"
+    dell_left="DP-1-1"
+    dell_right="DP-1-3"
 
     # Default args
     xrandr_args="--output ${laptop} --auto"
 
     # If externals plugged in
-    if is_connected ${predator} && is_connected ${dell_left} && is_connected ${dell_right}; then
+    if is_connected ${dell_left} && is_connected ${dell_right}; then
         xrandr --output ${laptop} --auto \
                --output ${dell_left} --auto --right-of ${laptop} --primary \
                --output ${dell_right} --auto --right-of ${dell_left}

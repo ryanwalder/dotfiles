@@ -13,22 +13,20 @@ is_connected() {
 killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
-set -x
 if [[ "${hostname}" == "ryanlaptop" ]]; then
     laptop="eDP-1"
-    dell_left="DP-1-2"
+    dell_left="DP-1-1"
     dell_right="DP-1-3"
 
     # If externals plugged in
     if is_connected ${dell_left} && is_connected ${dell_right}; then
         MONITOR="${laptop}" polybar side &
         MONITOR="${dell_right}" polybar side &
-        MONITOR="${dell_left}" polybar main &
+        MONITOR="${dell_left}" polybar main -l info&
     else # Just laptop
         MONITOR="${laptop}" polybar main &
     fi
 fi
-set +x
 
 if [[ "${hostname}" == "tfu" ]]; then
     dell_right="DP-1-1"
