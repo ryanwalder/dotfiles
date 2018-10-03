@@ -23,6 +23,7 @@ shopt -s checkwinsize
 # Load subfiles, always load secrets first, envars used in other files
 dotfiles=(
     ~/.bash_secrets
+    ~/.bash_work
     ~/.config/dotfiles/bash/aliases
     ~/.config/dotfiles/bash/envars
     ~/.config/dotfiles/bash/logout
