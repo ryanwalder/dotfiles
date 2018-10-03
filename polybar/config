@@ -171,7 +171,7 @@ label-connected                    = %essid% %signal%% %local_ip% %downspeed:8%%
 [module/vpn]
 type = custom/script
 exec = echo " "
-exec-if = pgrep openvpn
+exec-if = ip address show dev tun0
 format-prefix = 
 format-prefix-foreground = ${colors.icon}
 interval = 5
