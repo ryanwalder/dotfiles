@@ -29,8 +29,6 @@ if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
     alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
 fi
 
 # eg, extract examples from manpages
@@ -54,41 +52,55 @@ alias gcls='gcloud compute instances list'
 alias gsls='gsutil ls'
 
 # Vagrant
-function vagrant_destroy() {
-    if [[ -z $1 ]]; then
+function vd() {
+    if [[ -z $@ ]]; then
         vagrant destroy -f
     else
-        vagrant destroy -f "$1"
+        vagrant destroy -f "$@"
     fi
 }
 
-function vagrant_down_up() {
+function vud() {
     vagrant destroy -f "$1" ; vagrant up "$1" && vagrant ssh "$1"
 }
 
-function vagrant_up_ssh() {
-    vagrant up "$1" && vagrant ssh "$1"
+function vls() {
+    if [[ -f vagrant.yaml ]]; then
+        domain=$(grep domain vagrant.yaml | cut -d: -f 2 | tr -d ' ')
+        boxes=$(grep "name:" vagrant.yaml | cut -d: -f2)
+        for i in $boxes; do
+          echo ${i}.${domain:-tfu.io}
+        done
+    else
+        vagrant status | grep -E '(lxc|virtualbox|docker)'
+    fi
 }
 
-function vagrant_list() {
-    domain=$(grep domain vagrant.yaml| cut -d: -f 2 | tr -d ' ')
-    if [[ -z $domain ]]; then
-        domain=tfu.io
+function vuh() {
+    boxes=$@
+    # Destroy the specified machines first
+    vagrant destroy -f ${boxes}
+    # Launch the saltmaster if it's not running
+    if ! vagrant status saltmaster | grep saltmaster | grep -q "running"; then
+        vagrant up saltmaster
     fi
-    boxes=$(grep "name:" vagrant.yaml | cut -d: -f2)
-    for i in $boxes; do
-      echo ${i}.${domain}
+    # Launch each machine in the background then wait for them to come up
+    for i in ${boxes}; do
+        vagrant up "$i" &
+    done
+    wait
+    # Sleep for a minute to let the mine populate
+    sleep 60
+    # Run a highstate on each box in order.
+    # This could be parallelized but it would make the salt output very hard
+    # to follow
+    for i in ${boxes}; do
+        vagrant ssh "$i" -c "sudo salt-call state.apply"
     done
 }
 
-alias vd="vagrant_destroy"
-alias vp="vagrant provision"
 alias vssh="vagrant ssh"
-#alias vls="vagrant status | grep -E '(lxc|virtualbox|docker)'"
-alias vls="vagrant_list"
 alias vup="vagrant up"
-alias vus="vagrant_up_ssh"
-alias vud="vagrant_down_up"
 
 # Docker
 dnfo() {

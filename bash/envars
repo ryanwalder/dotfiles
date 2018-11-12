@@ -7,6 +7,9 @@ if [[ $(hostname) == "tfu" ]]; then
     export GDK_DPI_SCALE=05
 fi
 
+# Make gpg and git work nicely together
+export GPG_TTY=$(tty)
+
 if [[ -f ~/.bash_work ]]; then
     source ~/.bash_work
 fi
