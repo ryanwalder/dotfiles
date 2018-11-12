@@ -1,6 +1,7 @@
 [user]
     name = Ryan Walder
-    email = ryan.walder@gmail.com
+    email = ryan@tfu.io
+	signkey = 7F444D88C8F765C8
 [alias]
     # Work on origin
     ro = !git rebase origin/$(git symbolic-ref HEAD | sed 's!refs\\/heads\\/!!')
@@ -12,6 +13,7 @@
     rim = rebase -i upstream/master
     sum = log upstream/master..HEAD  --pretty=format:'* %s' --reverse
     # Lazy
+    sss = commit -m "sss"
     f = fetch --all
     co = checkout
     br = branch
@@ -39,3 +41,7 @@
 	helper = cache --timeout=28800
 [fetch]
 	prune = true
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg
