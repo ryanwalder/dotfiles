@@ -1,56 +1,14 @@
-! rofi settings
-rofi.modi:                           window,run,ssh
-rofi.opacity:                        100
-rofi.width:                          -120
-rofi.lines:                          15
-rofi.columns:                        1
-rofi.font:                           mono 12
-rofi.fg:                             #EEEEEE
-rofi.bg:                             #393939
-rofi.fg-active:                      #EEEEEE
-rofi.fg-urgent:                      #EEEEEE
-rofi.hlfg-active:                    #EEEEEE
-rofi.hlfg-urgent:                    #EEEEEE
-rofi.bg-active:                      #393939
-rofi.bg-urgent:                      #393939
-rofi.hlbg-active:                    #D75F00
-rofi.hlbg-urgent:                    #393939
-rofi.bgalt:                          #393939
-rofi.hlfg:                           #EEEEEE
-rofi.hlbg:                           #D75F00
-rofi.bc:                             #252525
-rofi.bw:                             1
-rofi.separator-style:                dash
-rofi.hide-scrollbar:                 true
-
-! xterm settings
-xterm*termName:         -xterm-256color
-xterm*utf8:             1
-xterm*faceName:         Terminus:size=8:antialias=false
-xterm*loginShell:       true
-xterm*locale:           true
-xterm*saveLines:        65535
-xterm*scrollstyle:      plain
-xterm*scrollBar:        false
-xterm*cursorBlink:      false
-xterm*cursorUnderline:  false
-xterm*metaSendsEscape:  true
-xterm*eightBitInput:    false
-xterm*backarrowKey:     false
-xterm*ttyModes:         erase ^?
-xterm*charClass:        33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
-
 ! rxvt
 urxvt*termName:             rxvt-unicode-256color
 urxvt.scrollBar:            false
 urxvt*scrollTtyOutput:      false
 urxvt*scrollWithBuffer:     true
 urxvt*scrollTtyKeypress:    true
-urxvt.font:                 xft:Terminus:size=8,xft:PowerlineSymbols:size=8
+urxvt.font:                 xft:Terminus:size=12,xft:PowerlineSymbols:size=8
 urxvt.letterSpace:          true
 
 ! color scheme:
-*background:       #000000
+*background:       #1B1B1B
 *foreground:       #FFFFFF
 
 *colorUL:          #86a2b0

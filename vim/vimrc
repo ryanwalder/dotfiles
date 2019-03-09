@@ -1,12 +1,34 @@
-" plugin loading with Pathogen
-execute pathogen#infect()
+" plugin management with vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+call plug#begin('~/.vim/plugged')
+Plug 'https://github.com/godlygeek/tabular.git'
+Plug 'https://github.com/tpope/vim-fugitive.git'
+Plug 'https://github.com/tpope/vim-speeddating.git'
+Plug 'https://github.com/bling/vim-airline.git'
+Plug 'https://github.com/saltstack/salt-vim.git'
+Plug 'https://github.com/rodjek/vim-puppet.git'
+Plug 'https://github.com/ntpeters/vim-better-whitespace.git'
+Plug 'https://github.com/Glench/Vim-Jinja2-Syntax.git'
+Plug 'https://github.com/ekalinin/Dockerfile.vim.git'
+Plug 'https://github.com/plasticboy/vim-markdown.git'
+Plug 'https://github.com/markcornick/vim-terraform.git'
+Plug 'https://github.com/martinda/Jenkinsfile-vim-syntax'
+Plug 'https://github.com/iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
+call plug#end()
 
 """ Spelling
 hi clear SpellBad
 hi SpellBad cterm=underline ctermfg=red
 
 """"""" defaults
+"" disable cursor changing in nvim
+set guicursor=
 "" colours
+set nohlsearch
 syntax on
 set t_Co=256
 set background=light
@@ -28,6 +50,7 @@ nnoremap Q <Nop>
 
 """"""" binds
 let mapleader = "\<Space>"
+set clipboard=unnamedplus
 
 " pasting
 nnoremap <F2> :set invpaste paste?<CR>
@@ -40,17 +63,11 @@ map <F8> :StripWhitespace<CR>
 map <F12> :set spell!<CR>
 inoremap <S-Tab> <C-V><Tab>
 
-""""""" movement
-" make navigating splits easier
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
-map <c-h> <c-w>h
-" make navigating tabs easier
-map <Leader>l <esc>:tabprevious<CR>
-map <Leader>h <esc>:tabnext<CR>
-" map sort function to a key
+" insert date
+nmap <Leader>d a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
+" sort
 vnoremap <Leader>s :sort<CR>
+vnoremap <Leader>i !sort -n -t . -k 1,1 -k 2,2 -k 3,3 -k 4,4<CR>
 
 """"""" dirs
 set directory=~/.vim/.swap//
@@ -73,9 +90,20 @@ autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 autocmd Filetype Dockerfile setlocal ts=4 sts=4 sw=4
 autocmd Filetype jinja syntax on
 
-" Showing line numbers and length
-set colorcolumn=80
-highlight ColorColumn ctermbg=233
+"" markdown-preview
+let g:mkdp_auto_start = 0
+let g:mkdp_command_for_global = 1
+let g:mkdp_auto_close = 1
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle'
+    \ }
+
+nmap <F10> :MarkdownPreview<CR>
 
 " airline
 if !exists('g:airline_symbols')
@@ -83,7 +111,7 @@ if !exists('g:airline_symbols')
 endif
 let g:airline_symbols.space = "\ua0"
 set laststatus=2
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 
 " vim-json
 let g:vim_json_syntax_conceal = 0

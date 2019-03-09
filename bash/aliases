@@ -113,5 +113,18 @@ dnfo() {
 alias docs='mkdocs serve'
 alias colours='for code in {0..255}; do echo -e "\e[38;05;${code}m $code: Test"; done'
 
+# Convert
+y2j() {
+  local in="$1"
+  local out=${in%.*}
+  python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)' < "${in}" > "${out}.json"
+}
+
+j2y() {
+  local in="$1"
+  local out=${in%.*}
+  python -c 'import sys, yaml, json; yaml.safe_dump(json.load(sys.stdin), sys.stdout, default_flow_style=False)' < "${in}" > "${out}.yaml"
+}
+
 # Ansible
 alias ansible-vault='ansible-vault --vault-password-file=$ANSIBLE_VAULT_PASSWORD_FILE'

@@ -36,7 +36,7 @@ function _show_git_status {
   # branch_name+ indicates there are stash(es)
   # branch_name? indicates there are untracked files
   # branch_name! indicates your branches have diverged
-  local unknown untracked stash clean ahead behind staged unstaged diverged
+  #local unknown untracked stash clean ahead behind staged unstaged diverged
   unknown="${dark_blue}"
   untracked="${dark_green}"
   stash="${light_green}"
@@ -88,7 +88,7 @@ function _show_git_status {
 function _build_prompt {
   git_status=$(_show_git_status)
   venv_status=$(_show_venv_status)
-  PS1="\u@\h${venv_status}${git_status} \w\$ "
+  PS1="\[\033[01;32m\]\u@\h\[\033[00m\]${venv_status}${git_status} \w\$ "
   return 0
 }
 PROMPT_COMMAND="_build_prompt; $PROMPT_COMMAND"
