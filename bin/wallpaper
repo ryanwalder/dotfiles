@@ -26,7 +26,7 @@ fi
 wall_image=${cache_dir}/current.png
 lock_image=${cache_dir}/lock.png
 tmp_lock_image=${cache_dir}/tmp_lock.png
-tmp_wall_image=${cache_dir}/tmp_lock.png
+tmp_wall_image=${cache_dir}/tmp_wall.png
 
 OUTPUT_IMG_WIDTH=0 # Decide size to cover all screens
 OUTPUT_IMG_HEIGHT=0 # Decide size to cover all screens
@@ -61,7 +61,7 @@ do
     fi
 done <<<"`xrandr`"
 
-# Convert
+## Convert
 if ! convert -size ${OUTPUT_IMG_WIDTH}x${OUTPUT_IMG_HEIGHT} 'xc:black' ${tmp_lock_image}; then
     logger -t $(basename $0) -s "Failed to create temp lock image"
     exit 1
@@ -72,8 +72,6 @@ elif ! convert ${image} -resize ${SCREEN_WIDTH}X${SCREEN_HEIGHT}^ -gravity Cente
     logger -t $(basename $0) -s "Failed to create temp wallpaper image"
     exit 1
 fi
-
-sleep 1
 
 cp ${tmp_lock_image} ${lock_image}
 cp ${tmp_wall_image} ${wall_image}
