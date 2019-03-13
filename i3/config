@@ -8,7 +8,7 @@ set $fg     #E8E9CA
 set $hi     #D75F00
 set $ac     #D75F00
 set $tx     #E8E9CA
-set $ia     #6C6C6C
+set $ia     #2D303B
 
 set $be     #4A708B
 set $yw     #EEE685
@@ -143,9 +143,11 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 ## Custom Bindings
-bindsym mod1+ctrl+l exec lock
+bindsym mod1+ctrl+l  exec lock
 bindsym $mod+shift+f exec thunar
 bindsym $mod+shift+l exec xautolock -toggle
+bindsym Print        exec flameshot full -c
+bindsym $mod+Print   exec flameshot gui
 
 # Media keys
 bindsym XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-volume 0 +5%
@@ -167,9 +169,8 @@ bindsym $mod+F11             exec --no-startup-id /usr/bin/playerctl next
 bindsym $mod+F10             exec --no-startup-id /usr/bin/playerctl previous
 
 ## Startup
-exec        --no-startup-id DISPLAY=:0.0 feh --bg-max ~/.cache/wallpaper/current.png
-exec_always --no-startup-id compton
+exec        --no-startup-id DISPLAY=:0 feh --bg-max ~/.cache/wallpaper/current.png
 exec_always --no-startup-id ~/bin/monitors
 exec        --no-startup-id dunst
 exec        --no-startup-id xset m 0/1 4 # disable mouse acceleration
-exec        --no-startup-id xautolock -time 5 -locker lock
+exec        --no-startup-id xautolock -time 5 -locker ~/bin/lock
