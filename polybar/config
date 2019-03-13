@@ -1,7 +1,7 @@
 ; vim:ft=dosini
 
 [colors]
-background  = #393939
+background  = #2d303b
 foreground  = #EEEEEE
 linecolor   = #FBA922
 bordercolor = #000000
