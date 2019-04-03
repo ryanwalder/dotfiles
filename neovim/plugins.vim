@@ -17,4 +17,5 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'https://github.com/markcornick/vim-terraform.git'
   Plug 'https://github.com/martinda/Jenkinsfile-vim-syntax'
   Plug 'https://github.com/iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
+  Plug 'https://github.com/hail2u/vim-css3-syntax'
 call plug#end()
