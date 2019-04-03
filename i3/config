@@ -71,10 +71,10 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+#bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -119,6 +119,7 @@ workspace 10 output DP-1-3
 for_window [window_role="pop-up"] floating enable
 for_window [class="scratch"] move to scratchpad
 for_window [class="Pavucontrol"] floating enable
+for_window [class="Wicd-client.py"] floating enable
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
