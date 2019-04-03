@@ -13,7 +13,7 @@
     rim = rebase -i upstream/master
     sum = log upstream/master..HEAD  --pretty=format:'* %s' --reverse
     # Lazy
-    sss = commit -m "sss"
+    sss = !sh -c 'git commit -m \"sss $@\"' -
     f = fetch --all
     co = checkout
     br = branch
