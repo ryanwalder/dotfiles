@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+list_layouts(){
+  autorandr 2>&1 | awk -e '{print $1}'
+}
+
+rofi=$(list_layouts | rofi -dmenu -p Monitors)
+
+autorandr -l $rofi

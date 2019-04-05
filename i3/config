@@ -149,6 +149,7 @@ bindsym $mod+shift+f exec thunar
 bindsym $mod+shift+l exec xautolock -toggle
 bindsym Print        exec flameshot full -c
 bindsym $mod+Print   exec flameshot gui
+bindsym $mod+m       exec monitors_rofi
 
 # Media keys
 bindsym XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-volume 0 +5%
