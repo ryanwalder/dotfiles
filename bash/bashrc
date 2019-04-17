@@ -28,6 +28,7 @@ dotfiles=(
     ~/.config/dotfiles/bash/envars
     ~/.config/dotfiles/bash/logout
     ~/.config/dotfiles/bash/profile
+    ~/.config/dotfiles/bash/ssh
 )
 
 for file in "${dotfiles[@]}"; do
@@ -58,3 +59,5 @@ fi
 
 # disable caps lock
 setxkbmap -option caps:none
+
+complete -C /home/ryan/bin/terraform terraform

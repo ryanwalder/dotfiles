@@ -1,0 +1,16 @@
+#!/usr/bin/env/bash
+
+if [[ $(hostname) == 'ryanlaptop' ]]; then
+  agent_started=0
+  export GPG_TTY="$(tty)"
+  export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+  gpgconf --launch gpg-agent
+  agent_started=1
+else
+  agent_started=0
+  if ! env | grep -q SSH_AGENT_PID >/dev/null; then
+    echo "Starting ssh agent"
+    eval $(ssh-agent -s)
+  fi
+  agent_started=1
+fi

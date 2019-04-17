@@ -1,30 +1,4 @@
 # Alias definitions.
-# enable/start ssh agent
-agent_started=0
-if ! env | grep -q SSH_AGENT_PID >/dev/null; then
-  echo "Starting ssh agent"
-  eval $(ssh-agent -s)
-  agent_started=1
-fi
-
-# make ssh a function, add the identity to agent when needed
-ssh() {
-  if ! ssh-add -l >/dev/null 2>&-; then
-    ssh-add ~/.ssh/id_rsa
-  fi
-  /usr/bin/ssh "$@"
-}
-export -f ssh
-
-git() {
-  if ! ssh-add -l >/dev/null 2>&-; then
-    ssh-add ~/.ssh/id_rsa
-  fi
-  /usr/bin/git "$@"
-}
-export -f git
-
-# enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'

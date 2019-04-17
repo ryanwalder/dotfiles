@@ -1,7 +1,7 @@
 [user]
     name = Ryan Walder
     email = ryan@tfu.io
-	signkey = 7F444D88C8F765C8
+	signingkey = 0xD953AE58DEB9603B
 [alias]
     # Work on origin
     ro = !git rebase origin/$(git symbolic-ref HEAD | sed 's!refs\\/heads\\/!!')

@@ -1,0 +1,9 @@
+sudo curl https://raw.githubusercontent.com/Yubico/libu2f-host/master/70-u2f.rules -o /etc/udev/rules.d/70-u2f.rules
+sudo reboot
+sudo apt-add-repository ppa:yubico/stable
+sudo apt-get update
+sudo apt-get install -y curl gnupg2 gnupg-agent cryptsetup scdaemon pcscd yubikey-personalization dirmngr secure-delete hopenpgp-tools yubikey-manager-qt
+
+https://github.com/drduh/YubiKey-Guide#verify-yubikey
+
+
