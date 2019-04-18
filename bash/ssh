@@ -3,8 +3,8 @@
 if [[ $(hostname) == 'ryanlaptop' ]]; then
   agent_started=0
   export GPG_TTY="$(tty)"
-  export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-  gpgconf --launch gpg-agent
+  export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+  gpg-connect-agent updatestartuptty /bye
   agent_started=1
 else
   agent_started=0
