@@ -41,9 +41,9 @@ function vud() {
 function vls() {
     if [[ -f vagrant.yaml ]]; then
         domain=$(grep domain vagrant.yaml | cut -d: -f 2 | tr -d ' ')
-        boxes=$(grep "name:" vagrant.yaml | cut -d: -f2)
+        boxes=$(grep "name:" vagrant.yaml | cut -d: -f 2)
         for i in $boxes; do
-          echo ${i}.${domain:-tfu.io}
+          echo ${i}.${domain:-tfu.io} | grep $1
         done
     else
         vagrant status | grep -E '(lxc|virtualbox|docker)'
