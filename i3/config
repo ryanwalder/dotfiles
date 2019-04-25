@@ -120,6 +120,7 @@ for_window [window_role="pop-up"] floating enable
 for_window [class="scratch"] move to scratchpad
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Wicd-client.py"] floating enable
+for_window [class="Lxappearance"] floating enable
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
