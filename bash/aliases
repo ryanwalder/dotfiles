@@ -54,29 +54,6 @@ function vls() {
     fi
 }
 
-function vuh() {
-    boxes=$@
-    # Destroy the specified machines first
-    vagrant destroy -f ${boxes}
-    # Launch the saltmaster if it's not running
-    if ! vagrant status saltmaster | grep saltmaster | grep -q "running"; then
-        vagrant up saltmaster
-    fi
-    # Launch each machine in the background then wait for them to come up
-    for i in ${boxes}; do
-        vagrant up "$i" &
-    done
-    wait
-    # Sleep for a minute to let the mine populate
-    sleep 60
-    # Run a highstate on each box in order.
-    # This could be parallelized but it would make the salt output very hard
-    # to follow
-    for i in ${boxes}; do
-        vagrant ssh "$i" -c "sudo salt-call state.apply"
-    done
-}
-
 alias vssh="vagrant ssh"
 alias vup="vagrant up"
 
