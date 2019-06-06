@@ -2,6 +2,7 @@
 
 source ~/.config/nvim/plugins.vim
 source ~/.config/nvim/mappings.vim
+autocmd FileType *.py :source ~/.config/nvim/python-mode.vim
 
 
 """ Spelling
@@ -17,6 +18,7 @@ syntax on
 set t_Co=256
 set background=light
 highlight Comment ctermfg=blue
+highlight Search ctermfg=256 ctermfg=0
 
 set nocompatible
 set backspace=2

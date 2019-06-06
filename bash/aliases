@@ -57,6 +57,11 @@ function vls() {
 alias vssh="vagrant ssh"
 alias vup="vagrant up"
 
+# AWS
+aws-switch() {
+    eval $(aws_switch_account "$1")
+}
+
 # Docker
 dnfo() {
     sudo docker stop $(sudo docker ps -a -q)
