@@ -26,12 +26,6 @@ vnoremap <Leader>i !sort -n -t . -k 1,1 -k 2,2 -k 3,3 -k 4,4<CR>
 vnoremap < <gv
 vnoremap > >gv
 
-" easier split navigation
-nnoremap <C-Down> <C-W><C-J>
-nnoremap <C-Up> <C-W><C-K>
-nnoremap <C-Left> <C-W><C-L>
-nnoremap <C-Right> <C-W><C-H>
-
 " generate 128char string
 nnoremap <F6> :r! pwgen 128 -s -1<CR>kJ
 
