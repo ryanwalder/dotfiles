@@ -3,15 +3,31 @@
     email = ryan@tfu.io
 	signingkey = 0xD953AE58DEB9603B
 [alias]
-    # Work on origin
-    ro = !git rebase origin/$(git symbolic-ref HEAD | sed 's!refs\\/heads\\/!!')
-    rio = !git rebase -i origin/$(git symbolic-ref HEAD | sed 's!refs\\/heads\\/!!')
-    som = !git log origin/$(git symbolic-ref HEAD | sed 's!refs\\/heads\\/!!')..HEAD  --pretty=format:'* %s' --reverse
-    # Work on upgtream (github etc...)
-    fu = fetch upstream
-    rum = rebase upstream/master
-    rim = rebase -i upstream/master
-    sum = log upstream/master..HEAD  --pretty=format:'* %s' --reverse
+    # Rebase, if we have an upstream, use that, else use origin
+    # Rebase upstream/master OR origin/master
+    rum = "!sh -c '\
+        if git remote -v | grep -q upstream; then \
+            git rebase upstream/master; \
+        else \
+            git rebase origin/master;\
+        fi'"
+    # Rebase interactive upstream/master OR origin/master
+    rim = "!sh -c '\
+        if git remote -v | grep -q upstream; then \
+            git rebase -i upstream/master; \
+        else \
+            git rebase -i origin/master; \
+        fi'"
+    # Show differing commits from uostream/master OR origin/master
+    # as `* commit message`
+    sum = "!sh -c '\
+        if git remote -v | grep -q upstream; then \
+            git log upstream/master..HEAD \
+            --pretty=format:\"* %s\" --reverse;\
+        else \
+        git log origin/master..HEAD \
+            --pretty=format:\"* %s\" --reverse;\
+        fi'"
     # Lazy
     sss = !sh -c 'git commit -m \"sss $@\"' -
     f = fetch --all
@@ -26,7 +42,7 @@
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     yolo = !git add . && git commit -m \"$(curl -s http://whatthecommit.com/index.txt)\" && git push origin master -f
 [core]
-    editor = vim
+    editor = /usr/bin/vi
 [merge]
     ff = only
 [push]
