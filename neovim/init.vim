@@ -31,9 +31,39 @@ set regexpengine=1
 set mouse=
 
 """"""" dirs
-set directory=~/.cache/nvim/swap//
-set backupdir=~/.cache/nvim/tmp//
-set undodir=~/.cache/nvim/undo//
+" Save your backups to a less annoying place than the current directory.
+if isdirectory($HOME . '/.cache/nvim/backup') == 0
+  :silent !mkdir -p ~/.cache/nvim/backup >/dev/null 2>&1
+endif
+set backupdir=~/.cache/nvim/backup
+set backup
+
+" Save your swp files to a less annoying place than the current directory.
+" If you have .vim-swap in the current directory, it'll use that.
+" Otherwise it saves it to ~/.vim/swap, ~/tmp or .
+if isdirectory($HOME . '/.cache/nvim/swap') == 0
+  :silent !mkdir -p ~/.cache/nvim/swap >/dev/null 2>&1
+endif
+set directory=~/.cache/nvim/swap
+
+" viminfo stores the the state of your previous editing session
+if has('nvim')
+  set shada+=n~/.cache/nvim/shada
+else
+  set viminfo=n~/.cache/nvim/viminfo
+endif
+
+" This is only present in 7.3+ {{{3
+if exists('+undofile')
+  " undofile - This allows you to use undos after exiting and restarting
+  " This, like swap and backups, uses .vim-undo first, then ~/.vim/undo
+  " :help undo-persistence
+  if isdirectory($HOME . '/.cache/nvim/undo') == 0
+    :silent !mkdir -p ~/.cache/nvim/undo > /dev/null 2>&1
+  endif
+  set undodir=~/.cache/nvim/undo//
+  set undofile
+endif
 
 """"""" tabs and indents
 set expandtab
