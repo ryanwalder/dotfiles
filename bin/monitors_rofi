@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
 
 list_layouts(){
+  #autorandr 2>&1 | grep detected | awk -e '{print $1}'
   autorandr 2>&1 | awk -e '{print $1}'
 }
 
 rofi=$(list_layouts | rofi -dmenu -p Monitors)
 
+# Set the requested layout
 autorandr -l $rofi
+
+# Generate a new wallpaper.
+# This is mostly for so the lockscreen as it uses the wallpaper for the
+# lockscreen image and if we don't regenerate the image we don't get a nice
+# multi-monitor lockscreen image.
+wallpaper
