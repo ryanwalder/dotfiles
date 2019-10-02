@@ -50,6 +50,7 @@ modules-right  = vpn wired-home wifi fs memory cpu-load battery date time
 tray-position  = right
 tray-padding   = 4
 tray-maxsize   = 16
+fixed-center   = false
 
 [bar/side]
 inherit        = bar/base
