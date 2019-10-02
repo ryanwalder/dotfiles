@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+laptop="eDP-1"
+left="DP-1-1"
+right="DP-1-3"
+
+i3-msg "[workspace='^(5|6|7)'] move workspace to output ${laptop};"
+i3-msg "[workspace='^(1|2|3|4)'] move workspace to output ${left};"
+i3-msg "[workspace='^(8|9|0)'] move workspace to output ${right};"
+
+killall -q polybar
+while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+
+MONITOR="${laptop}" polybar side &
+MONITOR="${right}" polybar side &
+MONITOR="${left}" polybar main &
