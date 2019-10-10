@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+xrandr \
+    --output ${left} --rotate left --pos 0x0 \
+    --output ${middle} --pos 1440x565 --mode 3440x1440 --rate 120 --primary \
+    --output ${right} --right-of DP-0

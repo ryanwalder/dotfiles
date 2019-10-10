@@ -45,3 +45,15 @@ if [[ "${hostname}" == "tfu" ]]; then
         MONITOR="${laptop}" polybar laptop &
     fi
 fi
+
+if [[ "${hostname}" == "warbastard" ]]; then
+    right="DVI-D-0"
+    middle="DP-0"
+    left="DP-2"
+
+    killall -q polybar
+    while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+    MONITOR="${right}" polybar side &
+    MONITOR="${middle}" polybar main &
+    MONITOR="${left}" polybar side &
+fi

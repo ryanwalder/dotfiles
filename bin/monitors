@@ -10,13 +10,23 @@ is_connected() {
     fi
 }
 
-laptop="eDP-1"
-left="DP-1-1"
-right="DP-1-3"
+if [[ ${hostname} == 'warbastard' ]]; then
+    left="DVI-0-0"
+    middle="DP-0"
+    right="DP-2"
 
-# If externals plugged in
-if is_connected ${left} && is_connected ${right}; then
-    autorandr --load work
-else
-    autorandr --load laptop
+    autorandr --load home
+
+elif [[ ${hostname} == 'ryanlaptop' ]]; then
+    laptop="eDP-1"
+    left="DP-1-1"
+    right="DP-1-3"
+
+    # If externals plugged in
+    if is_connected ${left} && is_connected ${right}; then
+        autorandr --load work
+    else
+        autorandr --load laptop
+    fi
 fi
+
