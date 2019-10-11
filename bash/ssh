@@ -1,17 +1,9 @@
-#!/usr/bin/env/bash
+#!/usr/bin/env bash
 agent_started=0
 
 if [[ $agent_started == 0 ]]; then
-    if [[ $(hostname) == 'ryanlaptop' ]]; then
-      export GPG_TTY="$(tty)"
-      export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
-      gpg-connect-agent updatestartuptty /bye > /dev/null
-      agent_started=1
-    else
-      if ! env | grep -q SSH_AGENT_PID >/dev/null; then
-        echo "Starting ssh agent"
-        eval $(ssh-agent -s)
-      fi
-      agent_started=1
-    fi
+  export GPG_TTY="$(tty)"
+  export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+  gpg-connect-agent updatestartuptty /bye > /dev/null
+  agent_started=1
 fi
