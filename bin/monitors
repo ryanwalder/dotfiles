@@ -15,7 +15,7 @@ if [[ ${hostname} == 'warbastard' ]]; then
     middle="DP-0"
     right="DP-2"
 
-    autorandr --load home
+    autorandr --load home --force
 
 elif [[ ${hostname} == 'ryanlaptop' ]]; then
     laptop="eDP-1"
