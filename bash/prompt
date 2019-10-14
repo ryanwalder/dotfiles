@@ -1,33 +1,35 @@
 # vi: set ft=sh :
 
-red="38;5;1"
-light_red="38;5;9"
-dark_red="38;5;124"
-yellow="38;5;220"
-light_yellow="38;5;11"
-dark_yellow="38;5;142"
-blue="38;5;4"
-light_blue="38;5;12"
-dark_blue="38;5;25"
-green="38;5;34"
-light_green="38;5;2"
-dark_green="38;5;35"
-magenta="38;5;165"
-light_magenta="38;5;5"
-dark_magenta="38;5;127"
-orange="38;5;130"
-light_orange="38;5;202"
-dark_orange="38;5;94"
-white="38;5;7"
-black="38;5;0"
-gray="38;5;248"
+red="\[\033[38;5;1m\]"
+light_red="\[\033[38;5;9m\]"
+dark_red="\[\033[38;5;124m\]"
+yellow="\[\033[38;5;220m\]"
+light_yellow="\[\033[38;5;11m\]"
+dark_yellow="\[\033[38;5;142m\]"
+blue="\[\033[38;5;4m\]"
+light_blue="\[\033[38;5;12m\]"
+dark_blue="\[\033[38;5;25m\]"
+green="\[\033[38;5;34m\]"
+light_green="\[\033[38;5;2m\]"
+dark_green="\[\033[38;5;35m\]"
+magenta="\[\033[38;5;165m\]"
+light_magenta="\[\033[38;5;5m\]"
+dark_magenta="\[\033[38;5;127m\]"
+orange="\[\033[38;5;130m\]"
+light_orange="\[\033[38;5;202m\]"
+dark_orange="\[\033[38;5;94m\]"
+white="\[\033[38;5;7m\]"
+black="\[\033[38;5;0m\]"
+gray="\[\033[38;5;248m\]"
 reset="\[\e[0m\]"
+bold_blue="\[\e[38;5;12m\]\[\e[1m\]"
+bright_bold_green="\[\033[01;32m\]"
 
 function _show_venv_status {
     if [[ -z "$VIRTUAL_ENV" ]]; then
         echo -n ""
     else
-        echo -n " \[\033[[${green}m\]$(basename $VIRTUAL_ENV)]${reset}"
+        echo -n " ${green}[$(basename $VIRTUAL_ENV)]${reset}"
     fi
 }
 
@@ -80,15 +82,24 @@ function _show_git_status {
       colour=$diverged
       branch="${branch}!"
     fi
-    echo -n " \[\033[${colour}m\](${branch})\[\033[0m\]"
+    echo -en " ${colour}\uf1d3 (${branch})${reset}"
   fi
   return 0
 }
 
+function _show_aws_status {
+    if [ ! -z "$AWS_DEFAULT_PROFILE" ]; then
+        echo -en " ${light_orange}\uf375  ${AWS_DEFAULT_PROFILE}${reset}"
+    fi
+}
+
 function _build_prompt {
-  git_status=$(_show_git_status)
-  venv_status=$(_show_venv_status)
-  PS1="\[\033[01;32m\]\u@\h\[\033[00m\]${venv_status}${git_status} \w\$ "
+  git=$(_show_git_status)
+  venv=$(_show_venv_status)
+  aws=$(_show_aws_status)
+
+  PS1="${bright_bold_green}\u@\h${reset}${aws}${venv}${git}\n${bold_blue}\w${reset} $ "
   return 0
 }
+
 PROMPT_COMMAND="_build_prompt; $PROMPT_COMMAND"
