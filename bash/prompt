@@ -88,15 +88,15 @@ function _show_git_status {
 }
 
 function _show_aws_status {
-    if [ ! -z "$AWS_DEFAULT_PROFILE" ]; then
-        echo -en " ${light_orange}\uf375  ${AWS_DEFAULT_PROFILE}${reset}"
+    if [ ! -z "$AWS_PROFILE" ]; then
+        echo -en " ${light_orange}\uf375  ${AWS_PROFILE}${reset}"
     fi
 }
 
 function _build_prompt {
-  git=$(_show_git_status)
-  venv=$(_show_venv_status)
-  aws=$(_show_aws_status)
+  local git=$(_show_git_status)
+  local venv=$(_show_venv_status)
+  local aws=$(_show_aws_status)
 
   PS1="${bright_bold_green}\u@\h${reset}${aws}${venv}${git}\n${bold_blue}\w${reset} $ "
   return 0

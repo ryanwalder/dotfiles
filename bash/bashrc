@@ -29,6 +29,7 @@ dotfiles=(
     ~/.config/dotfiles/bash/logout
     ~/.config/dotfiles/bash/profile
     ~/.config/dotfiles/bash/ssh
+    ~/.config/dotfiles/bash/aws
 )
 
 for file in "${dotfiles[@]}"; do

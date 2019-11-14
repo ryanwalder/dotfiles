@@ -57,11 +57,6 @@ function vls() {
 alias vssh="vagrant ssh"
 alias vup="vagrant up"
 
-# AWS
-aws-switch() {
-    eval $(aws_switch_account "$1")
-}
-
 # Docker
 dnfo() {
     sudo docker stop $(sudo docker ps -a -q)
@@ -72,6 +67,7 @@ dnfo() {
 # lazy
 alias docs='mkdocs serve'
 alias colours='for code in {0..255}; do echo -e "\e[38;05;${code}m $code: Test"; done'
+alias upgrade='sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y && sudo apt-get autoremove'
 
 # Convert
 y2j() {

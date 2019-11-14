@@ -1,0 +1,17 @@
+aws-profile() {
+  export AWS_PROFILE=$1
+  export AWS_DEFAULT_PROFILE=$1
+}
+
+_aws_profile_completer() {
+  _commands=$(cat ~/.aws/credentials  | grep '^\[' | sed 's/.$//;s/^.//')
+
+  local cur prev
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  COMPREPLY=( $(compgen -W "${_commands}" -- ${cur}) )
+
+  return 0
+}
+
+complete -F _aws_profile_completer aws-profile
