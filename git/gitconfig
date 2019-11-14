@@ -1,7 +1,7 @@
 [user]
     name = Ryan Walder
     email = ryan@tfu.io
-	signingkey = 0xD953AE58DEB9603B
+	signingkey = "0x989E877CD3E8FB7C"
 [alias]
     # Rebase, if we have an upstream, use that, else use origin
     # Rebase upstream/master OR origin/master
