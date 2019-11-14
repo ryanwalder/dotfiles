@@ -20,4 +20,5 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'https://github.com/hail2u/vim-css3-syntax'
   Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
   Plug 'python-rope/ropevim'
+  Plug 'pearofducks/ansible-vim'
 call plug#end()
