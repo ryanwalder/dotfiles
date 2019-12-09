@@ -8,9 +8,6 @@ if [[ $(hostname) == "tfu" ]]; then
     export GDK_DPI_SCALE=05
 fi
 
-# Make gpg and git work nicely together
-export GPG_TTY=$(tty)
-
 # Make steam load in the background
 export STEAM_FRAME_FORCE_CLOSE=1
 
