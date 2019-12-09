@@ -1,81 +1,150 @@
 #!/usr/bin/env bash
-# Select a random image from a directory to set as a wallpaper and single/multi
-# monitor lockscreen background
-# Outputs: ~/.cache/wallpaper/lock.png & ~/.cache/wallpaper/current.png
+# Select a random image from $WALLPAPER_DIR then either tile it once
+# per monitor or span all monitors
 
-source_dir=~/.wallpapers
-cache_dir=~/.cache/wallpaper
+# Options can be set via ENVARS or arguments
+#
+# WALLPAPER_IMAGE_TYPE || -t | --type [span | tile]
+#   default: tile
+# WALLPAPER_DIR || -i | --input /path/to/images
+#   default: ~/.wallpapers
+# OUTPUT_FILE || -o | --output /path/to/file
+#   default: ~/.cache/wallpaper/current.png
+#
+# Arguments take precedence
+if [[ ! -z $@ ]]; then
+    while true; do
+      case "$1" in
+        -t | --type)
+            WALLPAPER_IMAGE_TYPE="${2}"
+            shift 2
+        ;;
+        -i | --input)
+            WALLPAPER_DIR="${2}"
+            shift 2
+        ;;
+        -o | --output)
+            WALLPAPER_OUTPUT="${2}"
+            shift 2
+        ;;
+        -s | --set)
+            just_set=1
+            shift
+        ;;
+        *)
+            break
+        ;;
+      esac
+    done
+fi
 
+WALLPAPER_IMAGE_TYPE=${WALLPAPER_IMAGE_TYPE:-tile}
+WALLPAPER_DIR=${WALLPAPER_DIR:-~/.wallpapers}
+WALLPAPER_OUTPUT=${WALLPAPER_OUTPUT:-~/.cache/wallpaper/current.png}
+OUTPUT_TMP="/tmp/current.png"
+
+# Do some basic error checking
+# Check we have xrandr
 if ! command -v xrandr >/dev/null 2>&1; then
     logger -t $(basename $0) -s "xrandr not found, exiting"
     exit 1
-elif [[ ! -d ${source_dir} ]]; then
-    logger -t $(basename $0) -s "${source_dir} does not exist"
+# Check we have imagemagick installed
+elif ! command -v convert >/dev/null 2>&1; then
+    logger -t $(basename $0) -s "imagemagick convert not found, exiting"
     exit 1
-elif [[ ! -d ${cache_dir} ]]; then
-    mkdir ${cache_dir}
-fi
-
-image=$(find ${source_dir} -mindepth 1 -maxdepth 1 -type f | shuf -n1)
-
-if [[ -z ${image} ]]; then
-    logger -t $(basename $0) -s "No images found in ${source_dir}"
+# Check the specified input dir exists
+elif [[ ! -d ${WALLPAPER_DIR} ]]; then
+    logger -t $(basename $0) -s "${WALLPAPER_DIR} does not exist"
     exit 1
-fi
-
-wall_image=${cache_dir}/current.png
-lock_image=${cache_dir}/lock.png
-tmp_lock_image=${cache_dir}/tmp_lock.png
-tmp_wall_image=${cache_dir}/tmp_wall.png
-
-OUTPUT_IMG_WIDTH=0 # Decide size to cover all screens
-OUTPUT_IMG_HEIGHT=0 # Decide size to cover all screens
-
-#Execute xrandr to get information about the monitors:
-DISPLAY_RE="([0-9]+)x([0-9]+)\\+([0-9]+)\\+([0-9]+)"
-while read LINE
-do
-    #If we are reading the line that contains the position information:
-    if [[ $LINE =~ $DISPLAY_RE ]]; then
-        #Extract information and append some parameters to the ones that will be given to ImageMagick:
-        SCREEN_WIDTH=${BASH_REMATCH[1]}
-        SCREEN_HEIGHT=${BASH_REMATCH[2]}
-        SCREEN_X=${BASH_REMATCH[3]}
-        SCREEN_Y=${BASH_REMATCH[4]}
-
-        tmp_res_image=${cache_dir}/tmp_${SCREEN_WIDTH}X${SCREEN_HEIGHT}.png
-        if ! convert ${image} -resize ${SCREEN_WIDTH}X${SCREEN_HEIGHT}^ -gravity Center -crop ${SCREEN_WIDTH}X${SCREEN_HEIGHT}+0+0 +repage ${tmp_res_image}; then
-            logger -t $(basename $0) -s "Failed to create cache image"
-            exit 1
-        fi
-
-        # Decide size of output image
-        if (( $OUTPUT_IMG_WIDTH < $SCREEN_WIDTH+$SCREEN_X )); then
-            OUTPUT_IMG_WIDTH=$(($SCREEN_WIDTH+$SCREEN_X))
-        fi
-        if (( $OUTPUT_IMG_HEIGHT < $SCREEN_HEIGHT+$SCREEN_Y )); then
-            OUTPUT_IMG_HEIGHT=$(( $SCREEN_HEIGHT+$SCREEN_Y ))
-        fi;
-
-        PARAMS="$PARAMS ${tmp_res_image} -geometry +$SCREEN_X+$SCREEN_Y -composite "
+# Check output dir exists, if not, try and create it
+elif [[ ! -d $(dirname ${WALLPAPER_OUTPUT}) ]]; then
+    if ! mkdir -p $(dirname ${WALLPAPER_OUTPUT}); then
+        logger -t $(basename $0) -s "Unable to create ${WALLPAPER_CACHE_DIR}"
+        exit 1
     fi
-done <<<"`xrandr`"
-
-## Convert
-if ! convert -size ${OUTPUT_IMG_WIDTH}x${OUTPUT_IMG_HEIGHT} 'xc:black' ${tmp_lock_image}; then
-    logger -t $(basename $0) -s "Failed to create temp lock image"
-    exit 1
-elif ! convert ${tmp_lock_image} $PARAMS ${tmp_lock_image}; then
-    logger -t $(basename $0) -s "Failed to create temp lock image"
-    exit 1
-elif ! convert ${image} -resize ${SCREEN_WIDTH}X${SCREEN_HEIGHT}^ -gravity Center -crop ${SCREEN_WIDTH}X${SCREEN_HEIGHT}+0+0 +repage ${tmp_wall_image}; then
-    logger -t $(basename $0) -s "Failed to create temp wallpaper image"
-    exit 1
 fi
 
-cp ${tmp_lock_image} ${lock_image}
-cp ${tmp_wall_image} ${wall_image}
+# Generate wallpaper which takes one image and tiles it once per screen
+gen_tiled() {
+    local image=$(find "${WALLPAPER_DIR}" -mindepth 1 -maxdepth 1 -type f | shuf -n1)
 
-rm -rf ${cache_dir}/tmp*.png
+    OUTPUT_IMG_WIDTH=0
+    OUTPUT_IMG_HEIGHT=0
 
-feh --bg-max ${wall_image}
+    # Get information about the monitors
+    DISPLAY_RE="([0-9]+)x([0-9]+)\\+([0-9]+)\\+([0-9]+)"
+    while read LINE; do
+        # When we are reading the line that contains the position information
+        if [[ $LINE =~ $DISPLAY_RE ]]; then
+            # Extract information and append some parameters for imagemagick
+            SCREEN_WIDTH=${BASH_REMATCH[1]}
+            SCREEN_HEIGHT=${BASH_REMATCH[2]}
+            SCREEN_X=${BASH_REMATCH[3]}
+            SCREEN_Y=${BASH_REMATCH[4]}
+
+            local tmp_res_image="/tmp/wallpaper_temp.png"
+            if ! convert ${image} -resize ${SCREEN_WIDTH}X${SCREEN_HEIGHT}^ -gravity Center -crop ${SCREEN_WIDTH}X${SCREEN_HEIGHT}+0+0 +repage ${tmp_res_image}; then
+                logger -t $(basename $0) -s "Failed to create cache image"
+                exit 1
+            fi
+
+            # Decide size of output image
+            if (( $OUTPUT_IMG_WIDTH < $SCREEN_WIDTH+$SCREEN_X )); then
+                OUTPUT_IMG_WIDTH=$(($SCREEN_WIDTH+$SCREEN_X))
+            fi
+            if (( $OUTPUT_IMG_HEIGHT < $SCREEN_HEIGHT+$SCREEN_Y )); then
+                OUTPUT_IMG_HEIGHT=$(( $SCREEN_HEIGHT+$SCREEN_Y ))
+            fi
+            PARAMS="$PARAMS ${tmp_res_image} -geometry +$SCREEN_X+$SCREEN_Y -composite "
+        fi
+    done <<<"$(xrandr)"
+
+    ## Convert
+    if ! convert -size ${OUTPUT_IMG_WIDTH}x${OUTPUT_IMG_HEIGHT} 'xc:black' ${OUTPUT_TMP}; then
+        logger -t $(basename $0) -s "Failed to create temp image 1"
+        exit 1
+    elif ! convert ${OUTPUT_TMP} $PARAMS ${OUTPUT_TMP}; then
+        logger -t $(basename $0) -s "Failed to create temp image 2"
+        exit 1
+    elif ! convert ${image} -resize ${SCREEN_WIDTH}X${SCREEN_HEIGHT}^ -gravity Center -crop ${SCREEN_WIDTH}X${SCREEN_HEIGHT}+0+0 +repage ${OUTPUT_TMP}; then
+        logger -t $(basename $0) -s "Failed to create temp wallpaper image"
+        exit 1
+    fi
+}
+
+# Generate an image from one image, this was made with the assumption you have
+# a single image that is the same size as however many monitors you have.
+gen_spanned() {
+    local image=$(find "${WALLPAPER_DIR}" -mindepth 1 -maxdepth 1 -type f | shuf -n1)
+    convert ${image} ${OUTPUT_TMP}
+}
+
+gen_final() {
+    cp ${OUTPUT_TMP} ${WALLPAPER_OUTPUT}
+    rm -rf /tmp/wallpaper_temp.png
+}
+
+set_spanned() {
+    feh --bg-scale --no-xinerama ${WALLPAPER_OUTPUT}
+}
+
+set_tiled() {
+    feh --bg-max ${WALLPAPER_OUTPUT}
+}
+
+case $WALLPAPER_IMAGE_TYPE in
+    tile)
+        if [[ $just_set != 1 ]]; then
+            gen_tiled
+            gen_final
+        fi
+        set_tiled
+    ;;
+    span)
+        if [[ $just_set != 1 ]]; then
+            gen_spanned
+            gen_final
+        fi
+        set_spanned
+    ;;
+esac
