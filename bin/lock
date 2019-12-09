@@ -4,7 +4,11 @@
 pkill -u "$USER" -USR1 dunst
 
 # Lock the screen
-i3lock --nofork --color 393939 --image ~/.cache/wallpaper/lock.png
+i3lock \
+    --nofork \
+    --ignore-empty-password \
+    --color 000000 \
+    --image ~/.cache/wallpaper/current.png
 
 # Resume dunst when we unlock
 pkill -u "$USER" -USR2 dunst
