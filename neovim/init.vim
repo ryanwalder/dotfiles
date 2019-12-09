@@ -2,7 +2,10 @@
 
 source ~/.config/nvim/plugins.vim
 source ~/.config/nvim/mappings.vim
-autocmd FileType *.py :source ~/.config/nvim/python-mode.vim
+
+" Black
+autocmd BufWritePre *.py execute ':Black'
+let g:black_linelength = 80
 
 
 """ Spelling

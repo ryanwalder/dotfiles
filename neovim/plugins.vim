@@ -21,4 +21,5 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
   Plug 'python-rope/ropevim'
   Plug 'pearofducks/ansible-vim'
+  Plug 'psf/black'
 call plug#end()
